@@ -36,9 +36,9 @@
 	</head>
 	<body background="img/bg.png">
 
-		<div data-role="page" style="background:url('img/bg.png')"><br><br><br><br><br><br>
+		<div data-role="page" style="background:url('img/bg.png')"><br>
 			<center><i class='zmdi zmdi-search-in-page zmd-4x clr-white'></i>
-			<h4 class="clr-white">Suivre</h4></center><br><br>
+			<h4 class="clr-white">Suivre</h4></center><br>
 			<center>
 				<form>
 
@@ -46,14 +46,17 @@
 				<div class="box">
 
 					<!-- <label style="color:white" for="name2b"><i class='zmdi zmdi-account zmd-1x'></i><strong>Username</strong></label> -->
-	                <input style=" color:black;" type="text" name="email" id="email" data-clear-btn="true" placeholder=" Email">
+					 <input style=" color:black;" type="text" name="firstname" id="firstname" value="" data-clear-btn="true" placeholder=" First name">
+					 <input style=" color:black;" type="text" name="lastname" id="lastname" value="" data-clear-btn="true" placeholder=" Last name">
+					<!--   <input style=" color:black;" type="text" name="name2" id="name2b" value="" data-clear-btn="true" placeholder=" Username"> -->
+	                
+	                 <input style=" color:black;" type="text" name="phonenum" id="phonenum" value="" data-clear-btn="true" placeholder=" Phone number">
 
 				<!-- 	<label style="color:white" for="inputDate"><i class='zmdi zmdi-key zmd-1x'></i><strong>Password</strong></label> -->
-	                <input type="password" name="password" id="password"  data-clear-btn="true" placeholder=" Password">
-	                <button style="background-color:#00b3b3; color:white;" id="login" class="ui-btn">Login</button>
+					<input style=" color:black;" type="email" name="email" id="email" value="" data-clear-btn="true" placeholder=" Email">
+	                <input type="password" name="password" id="password" value="" data-clear-btn="true" placeholder=" Password">
+	                <button style="background-color:#00b3b3; color:white;" id="adduser" class="ui-btn"  >Sign Up</button>
                  </div>
-                 <br>
-                 <h6 class="clr-white" >Don't have an account? <a  class="clr-white" href="register.html"><b class="clr-white">Sign up</b></a></h6>
 
              </div>
          </form>
@@ -62,51 +65,40 @@
 
 		</div>
 		<script >
-		  
-		  document.getElementById("login").addEventListener("click", login);
+		   document.getElementById("adduser").addEventListener("click", addUser);
 
-			function loginComplete(xhr,status){
+		    function addUserComplete(xhr,status){
 		        if(status!="success"){
-		          alert("Error during login");
+		          alert("error while adding user");
 		          return;
 		        }
 		        else{
 		          var obj=JSON.parse(xhr.responseText);
-		         
 		          if(obj.result==0){
 		            alert(obj.message);
-		            window.location.href="index.html";
 		          }
 		          else{
-		             if(obj.user==null){
-		              alert("You haven't signed up yet");
-		              window.location.href="index.html";
-		            }else{
-		            
-		            // var firstname=obj.user.firstname;
-		            // var lastname=obj.user.lastname;
-		            
-		            localStorage.setItem("firstname",obj.user.firstname);
-    				localStorage.setItem("lastname",obj.user.lastname);
-    				localStorage.setItem("id",obj.user.userid);
-    				
-		          	window.location.href="landingpage.html";
-		        }
-		        }
+		         	alert(obj.message);
+		          	window.location.href="index.html";
+		         }
+		          
 		      }
 		    }
 
-		   function login(){
+		   function addUser(){
+		
+		    var firstname = document.getElementById("firstname").value;
+		    var lastname = document.getElementById("lastname").value;
 		    var email = document.getElementById("email").value;
 		    var password = document.getElementById("password").value;
-		    localStorage.setItem("email",email);
-    		localStorage.setItem("password",password);
-
-		      var ajaxPageUrl="ajaxPage.php?cmd=2&email="+email+"&password="+password;
-		  
+		    var phonenum = document.getElementById("phonenum").value;
+		    
+		    
+		    var ajaxPageUrl="ajaxPage.php?cmd=1&firstname="+firstname+"&lastname="+lastname+"&email="+email+"&phone="+phonenum+"&password="+password;
+		   
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
-		        complete:loginComplete
+		        complete:addUserComplete
 		      });
 		   }
 		</script>

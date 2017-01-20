@@ -49,7 +49,7 @@
             <div data-role="header" data-position="fixed" >
 
                 <a href="#bottomsheet" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-more-vert"></i></a>
-                <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
+                <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.1s'><i class="zmdi zmdi-menu"></i></a>
                 <h1 class="wow fadeIn" data-wow-delay='0.4s'>Add Device</h1>
 
             </div>
@@ -63,28 +63,29 @@
                     <div class="col-xs-10 col-sm-6 col-md-4">
                         <div class="box">
 
-                        <label for="name2b">Name:</label>
-                        <input type="text" name="name2" id="name2b" value="" data-clear-btn="true" placeholder="Iphone 6">
+                        <label for="device">Name:</label>
+                        <input type="text" name="device" id="device" value="" data-clear-btn="true" placeholder="Iphone 6">
 
                         
-                        <label for="textarea2b">Description:</label>
-                        <textarea cols="40" rows="8" name="textarea2" id="textarea2b" placeholder=""></textarea>
+                        <label for="description">Description:</label>
+                        <textarea cols="40" rows="8" name="description" id="description" placeholder=""></textarea>
 
-
+                        <label for="tag">Tag ID:</label>
+                        <input type="text" name="tag" id="tag" value="" data-clear-btn="true" placeholder="001">
                         
 
-                       <label for="select-choice-1b" class="select">Location: </label>
+                       <!-- <label for="select-choice-1b" class="select">Location: </label>
                         <select name="select-choice-1" id="select-choice-1b" data-native-menu="false">
-                            <option value="javascript">Library</option>
-                            <option value="css">Hostel</option>
-                            <option value="html">Engineering block</option>
-                            <option value="csharp">Administration</option>
-                            <option value="java">Akonor Cafetaria</option>
+                            <option value="Library">Library</option>
+                            <option value="Hostel">Hostel</option>
+                            <option value="Engineering block">Engineering block</option>
+                            <option value="Administration">Administration</option>
+                            <option value="Akonor Cafetaria">Akonor Cafetaria</option>
 
-                        </select>
+                        </select> -->
                         </div>
                         <br>
-                        <a href="#" class="ui-btn ui-btn-raised clr-primary">Add </a>
+                        <button id="add" class="ui-btn ui-btn-raised clr-primary">Add </button>
 
                     </div>
                     <div class="col-xs-1 col-sm-3 col-md-4">
@@ -95,6 +96,62 @@
 
         </div>
     </div>
+
+    <script >
+          
+          document.getElementById("add").addEventListener("click", addDevice);
+
+            function addDeviceComplete(xhr,status){
+                if(status!="success"){
+                  divStatus.innerHTML="error while adding user";
+                  return;
+                }
+                else{
+                  var obj=JSON.parse(xhr.responseText);
+                  if(obj.result==0){
+                    alert(obj.message);
+                  }
+                  else{
+                    // alert(obj.message);
+                    
+                   
+                    new $.nd2Toast({ // The 'new' keyword is important, otherwise you would overwrite the current toast instance
+                       message : "Device added", // Required
+                       action : { // Optional (Defines the action button on the right)
+                         title : "", // Title of the action button
+                         link : "", // optional (either link or fn or both must be set to define an action)
+                         fn : function() { // function that will be triggered when action clicked
+                            console.log("Action Button clicked'");
+                         },
+                         color : "red" // optional color of the button (default: 'lime')
+                       },
+                       ttl : 8000 // optional, time-to-live in ms (default: 3000)
+                     });
+                    $("#device").val("");
+                    $("#description").val("");
+                  
+                    $("#tag").val("");
+                 }
+                  
+              }
+            }
+
+           function addDevice(){
+            var device = document.getElementById("device").value;
+            var description = document.getElementById("description").value;
+            // var location = document.getElementById("select-choice-1b").value;
+            var tag = document.getElementById("tag").value;
+            var userid=localStorage.getItem("id");
+           
+            var ajaxPageUrl="ajaxPage.php?cmd=3&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid;
+              // prompt('url',ajaxPageUrl);
+              $.ajax(ajaxPageUrl,{
+                async:true,
+                complete:addDeviceComplete
+              });
+           }
+        </script>
+
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>

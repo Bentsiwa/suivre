@@ -36,7 +36,7 @@
                     body { opacity: 0; }
                 </style>
     </head>
-    <body>
+    <body >
 
         <div data-role="page">
 
@@ -58,6 +58,7 @@
                   <div id="map" style="width:100%;height:500px"></div>
 
             <script>
+              var place="";
               var customLabel = {
                 library: {
                   label: 'L'
@@ -66,24 +67,23 @@
                   label: 'H'
                 }
               };
+
+            function fillForm(){
+
+          }
+
+
             function myMap() {
                 var map = new google.maps.Map(document.getElementById('map'), {
                   center: new google.maps.LatLng(5.7596123,-0.2194058),
                   zoom: 16
                 });
-                
-                 // var marker = new google.maps.Marker({position:new google.maps.LatLng(5.7596123,-0.2194058)});
-
-                 //    marker.setMap(map);
-                 //     infowindow = new google.maps.InfoWindow({
-                 //    content: "You are here!"
-                 //  });
-                 //     infowindow.open(map,marker);
-
+              
+                  place=getQueryVariable("placename");
                 var infoWindow = new google.maps.InfoWindow;
-                //var place=getQueryVariable("placename");
-                   var ajaxPageUrl='ajaxPage.php?cmd=7';
-                  // Change this depending on the name of your PHhttp://localhost/suivre/devicepage.html?image=img/phone.jpg&device=Sumsumg%20NEW%20phone&location=undefinedP or XML file
+                
+                   var ajaxPageUrl='ajaxPage.php?cmd=8&place='+place;
+                                    // Change this depending on the name of your PHP or XML file
                   downloadUrl(ajaxPageUrl, function(data) {
                     var xml = data.responseXML;
                     var markers = xml.documentElement.getElementsByTagName('marker');
@@ -113,14 +113,13 @@
                         animation: google.maps.Animation.BOUNCE,
                         
                       });
-                      marker.addListener('click', function() {
-                        infoWindow.setContent(infowincontent);
-                        infoWindow.open(map, marker);
-                      });
+                       marker.setMap(map);
 
-
-          //infowindow.open(map,marker);
-
+                    var infowindow = new google.maps.InfoWindow({
+                      content: infowincontent
+                    });
+                    infowindow.open(map,marker);
+  
             });
           });
         }
@@ -144,6 +143,21 @@
       }
 
       function doNothing() {}
+
+
+        function getQueryVariable(variable) {
+        
+          var query = window.location.search.substring(1);
+          var vars = query.split("&");
+          for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+               
+              return pair[1];
+            }
+          } 
+          alert('Query Variable ' + variable + ' not found');
+        }
 
             </script>
 

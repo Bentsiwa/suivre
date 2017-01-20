@@ -19,80 +19,88 @@
 			/**
 			*@var string $strQuery should contain insert query
 			*/
-			$strQuery="select * from client where password like '$password' and email like '$email'";
+			$strQuery="select * from user where password like '$password' and email like '$email'";
 			
 			return $this->query($strQuery);
 		}
 
 
 		
-		function addUser($fullname,$email,$tel,$org,$password){
+		function addUser($firstname,$lastname,$email,$tel, $password){
 			/**
 			*@var string $strQuery should contain insert query
 			*/
-			$strQuery="insert into client set
-			fullname ='$fullname',
+			$strQuery="insert into user set
+			firstname ='$firstname',
 							email='$email',
-							tel='$tel',
-							org='$org',
+							phone='$tel',
+							lastname='$lastname',
 							password='$password'";
+						
 				
 			return $this->query($strQuery);
 		}
 
-		function updatePool($boolean,$id,$mode,$numpeople){
+		function editDevice($device,$description, $tag,$id,$deviceid){
 			/**
 			*@var string $strQuery should contain insert query
 			*/
-			$strQuery="update carpool set isJoined=$boolean, paymentMode='$mode', numpeoplejoined=$numpeople where cid=$id";
+			
+			$strQuery="update device set
+			name='$device',
+			description ='$description',
+			tagidentification='$tag',
+			userid='$id'
+			where deviceid=$deviceid";
 			return $this->query($strQuery);
 		}
 
-		function addPool($email,$source,$destination,$date, $starttime,$endtime,$numpeople, $carregistration,$cartype,$broadcast){
+		function addDevice($device,$description, $tag,$id){
 			/**
 			*@var string $strQuery should contain insert query
 			*/
-			$strQuery="insert into carpool set
-			email='$email',
-			startplace ='$source',
-							destination='$destination',
-							dateoftravel='$date',
-							starttime='$starttime',
-							endtime='$endtime',
-							numpeople=$numpeople,
-							carregistration='$carregistration',
-							cartype='$cartype',
-							broadcast='$broadcast'";
+			$strQuery="insert into device set
+			name='$device',
+			description ='$description',
+			tagidentification='$tag',
+			userid='$id'";
 							
 			return $this->query($strQuery);
 
 		}
-		function getPool(){
+
+		function getLocation($location){
 			/**
 			*@var string $strQuery should contain insert query
 			*/
-			$strQuery="select * from carpool";
+			$strQuery="select * from location where placename='$location'";
+
 							
 			return $this->query($strQuery);
 
 		}
-		function getNews(){
-			/**
-			*@var string $strQuery should contain insert query
-			*/
-			$strQuery="select * from news";
-							
-			return $this->query($strQuery);
-
-		}
-		function getUser($email){
-			$strQuery="select phone from user where email='$email'";
+		
+		function getDevices(){
+			$strQuery="select * from device";
 			
 			return $this->query($strQuery);
 		}
 
-		function addimage($location,$description){
-			$strQuery="insert into news set location='$location',description='$description'";
+		function getDeviceLocation($filter=false){
+			$strQuery="select device.deviceid, device.name, device.image, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on location.locationid=devicelocation.locationid inner join device on devicelocation.deviceid=device.deviceid";
+
+			if($filter!=false){
+                $strQuery=$strQuery . " where device.deviceid='$filter'";
+            }
+
+            //$strQuery=$strQuery . "ORDER BY devicelocation.time DESC";
+
+         
+			return $this->query($strQuery);
+		}
+
+		function deleteDevice($deviceid){
+			$strQuery="delete from device where deviceid='$deviceid'";
 			return $this->query($strQuery);
 		}
 	}
