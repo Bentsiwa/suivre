@@ -5,7 +5,7 @@
 	function onDeviceReady() {
 
       
-		var push = PushNotification.init({ "android": {"senderID": "156322"}});
+		var push = PushNotification.init({ "android": {"senderID": "81511517930"}});
 		 push.on('registration', function(data) {
 		 console.log(data.registrationId);
 		 document.getElementById("gcm_id").innerHTML = data.registrationId;
