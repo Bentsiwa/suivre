@@ -82,7 +82,7 @@
                   place=getQueryVariable("placename");
                 var infoWindow = new google.maps.InfoWindow;
                 
-                   var ajaxPageUrl='http://35.166.18.143/~efua.bainson/ajaxPage.php?cmd=8&place='+place;
+                   var ajaxPageUrl='http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=8&place='+place;
                                     // Change this depending on the name of your PHP or XML file
                   downloadUrl(ajaxPageUrl, function(data) {
                     var xml = data.responseXML;
