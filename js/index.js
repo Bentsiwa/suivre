@@ -4,47 +4,21 @@
 	
 	function onDeviceReady() {
 
-       document.getElementById('barcode').onclick=function(){
-					cordova.plugins.barcodeScanner.scan(onBarcodeSuccess,onBarcodeFail
-						,
-	      	
-	     	 			{
-				          "preferFrontCamera" : true, // iOS and Android 
-				          "showFlipCameraButton" : true, // iOS and Android 
-				          "prompt" : "Place a barcode inside the scan area", // supported on Android only 
-				          "formats" : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED 
-				          "orientation" : "landscape" // Android only (portrait|landscape), default unset so it rotates with the device 
-				    	});
-		}
-		document.getElementById("share").onclick = function() {
-			navigator.contacts.pickContact(function(contact){
-	      
-				alert(contact.displayName);
-	        document.getElementById("tel").value=contact.phoneNumbers[0].value;
-	        
-		    },function(err){
-		        alert('Error: ' + err);
-		    }); 
-		}
-	} ;
+      
+		var push = PushNotification.init({ "android": {"senderID": "156322"}});
+		 push.on('registration', function(data) {
+		 console.log(data.registrationId);
+		 document.getElementById("gcm_id").innerHTML = data.registrationId;
+		 });
 
-	function onBarcodeSuccess(result) {
-	          alert("We got a barcode\n" +
-	                "Result: " + result.text + "\n" +
-	                "Format: " + result.format + "\n" +
-	                "Cancelled: " + result.cancelled);
-	 }
+		 push.on('notification', function(data) {
+		 alert(data.title+" Message: " +data.message);
+		 });
 
-	 function onBarcodeFail(error) {
-	          alert("Scanning failed: " + error);
-	 	}
-
-
-
-	
-
-
-
+		 push.on('error', function(e) {
+		 alert(e);
+		 });
+	};
 
 })();
 
