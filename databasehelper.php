@@ -32,8 +32,8 @@ class databasehelper{
    
 
   
-   // $this->db=new mysqli("localhost","efua.bainson","0c9bd4bc931f1e04","dbms_efua.bainson");
-    $this->db=new mysqli("localhost","root","","finalproject");
+   $this->db=new mysqli("localhost","efua.bainson","0c9bd4bc931f1e04","dbms_efua.bainson");
+    //$this->db=new mysqli("localhost","root","","finalproject");
   	if($this->db->connect_errno){
   			return false;
   	}
