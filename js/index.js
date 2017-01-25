@@ -3,7 +3,7 @@
 	document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 	
 	function onDeviceReady() {
-
+	document.getElementById("indexbtn").onclick = function() {
       alert("here");
 		var push = PushNotification.init({ "android": {"senderID": "81511517930"}});
 		 push.on('registration', function(data) {
@@ -20,7 +20,11 @@
 		 push.on('error', function(e) {
 		 alert(e);
 		 });
+
+		}
 	};
+
+
 
 })();
 
