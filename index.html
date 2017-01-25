@@ -106,13 +106,13 @@
 		              alert("You haven't signed up yet");
 		              window.location.href="index.html";
 		            }else{
-		            
+		          
 		            // var firstname=obj.user.firstname;
 		            // var lastname=obj.user.lastname;
 		            
-		      //       localStorage.setItem("firstname",obj.user.firstname);
-    				// localStorage.setItem("lastname",obj.user.lastname);
-    				// localStorage.setItem("id",obj.user.userid);
+		            localStorage.setItem("firstname",obj.user.firstname);
+    				localStorage.setItem("lastname",obj.user.lastname);
+    				localStorage.setItem("id",obj.user.userid);
     				
 		          	window.location.href="landingpage.html";
 		        }
@@ -127,7 +127,7 @@
     		localStorage.setItem("password",password);
 
 		      var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=2&email="+email+"&password="+password;
-		  
+		  //prompt('url',ajaxPageUrl);
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:loginComplete
