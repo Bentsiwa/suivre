@@ -129,6 +129,7 @@
   <plugin name="cordova-plugin-compat" />
   <plugin name="cordova-plugin-file"  />
   <plugin name="phonegap-plugin-push"/>
+   <plugin name="cordova-google-play-services"/>
  <!--  <plugin name="cordova-plugin-geolocation"/> -->
  <!--  <plugin name="cordova-plugin-contacts"/>
   <plugin name="cordova-plugin-splashscreen"/> -->
