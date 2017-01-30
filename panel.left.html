@@ -1,20 +1,21 @@
 			<!-- panel left -->
 			<div  data-role="panel" id="leftpanel" data-display="overlay" data-position-fixed="true" >
-
+				
 				<div class='nd2-sidepanel-profile wow fadeInDown'>
 					 <img class='profile-background' src="img/green2.jpg" /> 
 					<div class="row">
 						<div class='col-xs-4 center-xs'>
 							<div class='box'>
 								<!-- <a href="#" class="ui-btn ui-btn-inline ui-btn-fab ui-btn-raised "><i class='zmdi zmdi-account-circle zmd-2x'></i></a> -->
+								<a  href="uploadimage.html"  data-rel="dialog" data-transition="pop" class="ui-btn ui-btn-inline ui-btn-fab ui-btn-raised " ><i class='zmdi zmdi-account-circle zmd-2x'></i></a>
 								<!--  <input type="file" id="image" name="image"> -->
         
 								<!-- <i class='zmdi zmdi-account-circle zmd-3x clr-white profile-thumbnail'></i> -->
-								<img class="profile-thumbnail" src="img/user.jpg" /> 
+								<!-- <img class="profile-thumbnail" src="img/user.jpg" />  -->
 								<!-- <a href="#" class="ui-btn clr-primary nd2-subhead">Upload image</a> -->
 							</div>
 						</div>
-						<div class='col-xs-8'>
+						<div class='col-xs-8'> 
 							<div class='box profile-text'>
 								<strong id="fullname">Efua Bainson</strong>
 								<span id="useremail" class='subline'>efuabainson@gmail.com</span>
@@ -23,15 +24,6 @@
 					</div>
 				</div>
 
-					<!-- <ul data-role="listview" data-icon="false">
-						<li><a href="landingpage.html" data-ajax='false'><i class='zmdi zmdi-account-o zmd-1x'></i>My Profile</a></li>
-						
-					</ul> -->
-		<!-- 
-				<hr class="inset">
-				<ul data-role="listview" data-inset="false">
-					<li data-role="list-divider">All labels</li>
-				</ul> -->
 				
 				<ul data-role="listview" data-icon="false">
 						<li><a href="landingpage.html" style=" color:#808080;" data-ajax='false'><i style=" color:#808080;"class='zmdi zmdi-home zmd-1x'></i> Home</a></li>
@@ -53,7 +45,22 @@
 						<li><a href="index.html" style=" color:#808080;"data-ajax='false'><i style=" color:#808080;"class='zmdi zmdi-sign-in zmd-1x'></i> Logout</a></li>
 						
 					</ul>
-				<!-- </div> -->
+			
 			</div>
 			<!-- /panel left -->
+
+			<div data-role="popup" id="uploadimage">
+
+                <div data-role="header">
+                	<h1 class='nd-title'>Upload Image</h1>
+            	</div>
+
+                <div data-role="content">
+                   
+                    <button onclick="continueDelete()" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-check'></i> Camera</button>
+                    <button data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><input type="file" id="image" name="image"><i class='zmdi zmdi-cancel'></i> Gallery</button>
+
+                </div>
+            </div>
+			
 			
