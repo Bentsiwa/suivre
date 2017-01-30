@@ -28,26 +28,26 @@
                 var mobile_system = '';
               }
          </script>
-         <script >
-			document.addEventListener("deviceready",onDeviceReady,false);
-			function onDeviceReady(){
-				alert("here");
-				 var push = PushNotification.init({ "android": {"senderID": "81511517930"}});
-				 push.on('registration', function(data) {
-				 console.log(data.registrationId);
-				 alert(data.registrationId);
-				 document.getElementById("gcm_id").innerHTML = data.registrationId;
-				 });
+        <script >
+		// 	document.addEventListener("deviceready",onDeviceReady,false);
+		// 	function onDeviceReady(){
+		// 		alert("here");
+		// 		 var push = PushNotification.init({ "android": {"senderID": "81511517930"}});
+		// 		 push.on('registration', function(data) {
+		// 		 console.log(data.registrationId);
+		// 		 alert(data.registrationId);
+		// 		 document.getElementById("gcm_id").innerHTML = data.registrationId;
+		// 		 });
 
-				 push.on('notification', function(data) {
-				 alert(data.title+" Message: " +data.message);
-				 });
+		// 		 push.on('notification', function(data) {
+		// 		 alert(data.title+" Message: " +data.message);
+		// 		 });
 
-				 push.on('error', function(e) {
-				 alert(e);
-				 });
-			}
-		</script>
+		// 		 push.on('error', function(e) {
+		// 		 alert(e);
+		// 		 });
+		// 	}
+		// </script>
 
      
 
@@ -58,8 +58,6 @@
 			<center><i class='zmdi zmdi-search-in-page zmd-4x clr-white'></i>
 			<h4 class="clr-white">Suivre</h4></center><br><br>
 			
-				Your GCM ID : <br/>
-				<p id="gcm_id"></p>
 				
 			<center>
 				<form>
@@ -83,6 +81,42 @@
 
 
 		</div>
+
+		<script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
+		<script>
+		  // Initialize Firebase
+		  var config = {
+		    apiKey: "AIzaSyDFTaM3V2z_I2FKTFnLrYsRFqsf2K1F-u8",
+		    authDomain: "suivre-156322.firebaseapp.com",
+		    databaseURL: "https://suivre-156322.firebaseio.com",
+		    storageBucket: "suivre-156322.appspot.com",
+		    messagingSenderId: "81511517930"
+		  };
+		  firebase.initializeApp(config);
+		
+			  const messaging = firebase.messaging();
+			 messaging.requestPermission()
+			.then(function() {
+			  alert('Notification permission granted.');
+			  return messaging.getToken();
+			  // TODO(developer): Retrieve an Instance ID token for use with FCM.
+			  // ...
+			})
+			.then(function(token){
+				alert(token);
+			})
+			.catch(function(err) {
+			  alert('Unable to get permission to notify.', err);
+			});
+
+			messaging.onMessage(function(payload) {
+			  alert("Message received. ", payload);
+			  // ...
+			});
+
+
+
+		</script>
 		<script >
 		  
 		  document.getElementById("login").addEventListener("click", login);
