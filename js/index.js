@@ -55,5 +55,13 @@
 })();
 
 
+// var sumitBtn=document.getElementById("loginin");
+ 
+//  function submitClick(){
+//  	alert("here");
+//  	var firebaseRef=firebase.database().ref();
+//  	firebaseRef.child("Hello").set("My notification");
+
+//  }
 
 
