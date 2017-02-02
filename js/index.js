@@ -1,67 +1,42 @@
 (function() {
 
-	// document.addEventListener('deviceready', onDeviceReady.bind(this), false);
+	document.addEventListener('deviceready', onDeviceReady.bind(this), false);
 	
-	// function onDeviceReady() {
-	// // document.getElementById("indexbtn").onclick = function() {
- // //      alert("here");
-	// // 	var push = PushNotification.init({ "android": {"senderID": "81511517930"}});
-	// // 	 push.on('registration', function(data) {
-	// // 	 var device=data.registrationId; 
-	// // 	 console.log(data.registrationId);
-	// // 	 //document.getElementById("gcm_id").innerHTML = data.registrationId;
-	// // 	 alert(data.registrationId);
-	// // 	 });
+	function onDeviceReady() {
 
-	// // 	 push.on('notification', function(data) {
-	// // 	 alert(data.title+" Message: " +data.message);
-	// // 	 });
+	document.getElementById("addingimage").onclick = function() {
+		
+			navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+				quality : 50,
 
-	// // 	 push.on('error', function(e) {
-	// // 	 alert(e);
-	// // 	 });
+				destinationType : destinationType.DATA_URL
+			});
+		}
 
-	// // 	}
-
-	// document.getElementById("capturePhoto").onclick = function() {
-	// 		navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-	// 			quality : 50,
-
-	// 			destinationType : destinationType.DATA_URL
-	// 		});
-	// 	}
-
-	// };
+	};
 
 
-	// function onPhotoDataSuccess(imageData) {
+	function onPhotoDataSuccess(imageData) {
 
-	// 	var smallImage = document.getElementById('smallImage');
+		var smallImage = document.getElementById('smallImage');
 
-	// 	smallImage.style.display = 'block';
+		smallImage.style.display = 'block';
 
-	// 	smallImage.src = "data:image/jpeg;base64," + imageData;
+		smallImage.src = "data:image/jpeg;base64," + imageData;
 
-	// }
+	}
 
-	// function onFail(message) {
+	function onFail(message) {
 
-	// 	alert('Failed because: ' + message);
+		alert('Failed because: ' + message);
 
-	// }
+	}
 
 
 
 })();
 
 
-// var sumitBtn=document.getElementById("loginin");
- 
-//  function submitClick(){
-//  	alert("here");
-//  	var firebaseRef=firebase.database().ref();
-//  	firebaseRef.child("Hello").set("My notification");
 
-//  }
 
 

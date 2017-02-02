@@ -72,8 +72,9 @@
 
                         <label for="tag">Tag ID:</label>
                         <input type="text" name="tag" id="tag" value="" data-clear-btn="true" placeholder="001">
-                        
 
+                        
+                        <a href="#addingimage" data-rel='popup' data-position-to='window' data-role='button' data-inline='true' data-transition='pop'class="ui-btn"><i class='zmdi zmdi-camera'></i> Upload Image</a>
                        <!-- <label for="select-choice-1b" class="select">Location: </label>
                         <select name="select-choice-1" id="select-choice-1b" data-native-menu="false">
                             <option value="Library">Library</option>
@@ -92,6 +93,19 @@
                     </div>
                 
 
+            </div>
+              <div data-role="popup" id="addingimage">
+
+                <div data-role="header">
+                  <h1 class='nd-title'>Upload Image</h1>
+              </div>
+
+                <div data-role="content">
+                    <!-- <p>Are you sure you want to delete this device?</p> -->
+                    <button onclick="continueDelete()" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-check'></i> Camera</button>
+                    <button data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-cancel'></i> Gallery</button>
+
+                </div>
             </div>
 
         </div>
@@ -152,7 +166,7 @@
            }
         </script>
 
-
+         <script type="text/javascript" src="js/index.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
@@ -160,7 +174,7 @@
         <script src="vendor/wow/wow.min.js"></script>
         <script src="js/nativedroid2.js"></script>
         <script src="nd2settings.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+       
 
     </body>
 </html>
