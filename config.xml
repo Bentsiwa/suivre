@@ -88,7 +88,7 @@
   </platform>
 
   <platform name="android">
-    <splash src="img/res/drawable-hdpi/appicon.png" density="land-hdpi"/>
+   <!--  <splash src="img/res/drawable-hdpi/appicon.png" density="land-hdpi"/>
     <splash src="img/res/screens/android/screen-ldpi-landscape.png" density="land-ldpi"/>
     <splash src="img/res/drawable-mdpi/appicon.png" density="land-mdpi"/>
     <splash src="img/res/screens/android/screen-xhdpi-landscape.png" density="land-xhdpi"/>
@@ -96,7 +96,7 @@
     <splash src="img/res/screens/android/screen-hdpi-portrait.png" density="port-hdpi"/>
     <splash src="img/res/screens/android/screen-ldpi-portrait.png" density="port-ldpi"/>
     <splash src="img/res/screens/android/screen-mdpi-portrait.png" density="port-mdpi"/>
-    <splash src="img/res/drawable-xhdpi/appicon.png" density="port-xhdpi"/>
+    <splash src="img/res/drawable-xhdpi/appicon.png" density="port-xhdpi"/> -->
   </platform>
 
   <platform name="ios">
