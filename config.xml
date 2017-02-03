@@ -31,10 +31,10 @@
   </platform>
 
   <platform name="android">
-    <icon src="img/icon.png" density="ldpi" />
+   <!--  <icon src="img/icon.png" density="ldpi" />
     <icon src="img/icon.png" density="mdpi" />
     <icon src="img/icon.png" density="hdpi" />
-    <icon src="img/icon.png" density="xhdpi" />
+    <icon src="img/icon.png" density="xhdpi" /> -->
   </platform>
 
   <platform name="ios">
@@ -88,7 +88,7 @@
   </platform>
 
   <platform name="android">
-   <!--  <splash src="img/res/drawable-hdpi/appicon.png" density="land-hdpi"/>
+<!--     <splash src="img/res/drawable-hdpi/appicon.png" density="land-hdpi"/>
     <splash src="img/res/screens/android/screen-ldpi-landscape.png" density="land-ldpi"/>
     <splash src="img/res/drawable-mdpi/appicon.png" density="land-mdpi"/>
     <splash src="img/res/screens/android/screen-xhdpi-landscape.png" density="land-xhdpi"/>
