@@ -96,20 +96,20 @@
 			  const messaging = firebase.messaging();
 			 messaging.requestPermission()
 			.then(function() {
-			  alert('Notification permission granted.');
+			 // alert('Notification permission granted.');
 			  return messaging.getToken();
 			  // TODO(developer): Retrieve an Instance ID token for use with FCM.
 			  // ...
 			})
 			.then(function(token){
-				alert(token);
+				//alert(token);
 				//sending data
 				// var firebaseRef=firebase.database().ref();
  			// 	firebaseRef.push().set("Me notification");
  				//retrieving data
  				var firebaseHeadingRef=firebase.database().ref().child("Hello");
  				firebaseHeadingRef.on('value',function(datasnapshot){
- 					alert(datasnapshot.val());
+ 					//alert(datasnapshot.val());
  				})
 			})
 			.catch(function(err) {

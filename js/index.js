@@ -4,7 +4,7 @@
 	
 	function onDeviceReady() {
 
-	document.getElementById("addingimage").onclick = function() {
+	document.getElementById("newimage").onclick = function() {
 		
 			navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
 				quality : 50,
