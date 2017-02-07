@@ -114,6 +114,15 @@
     <script >
           
           document.getElementById("add").addEventListener("click", addDevice);
+          document.getElementById("newimage").addEventListener("click", getImage);
+          function getImage(){
+            alert("camera");
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+                quality : 50,
+
+                destinationType : destinationType.DATA_URL
+              });
+          }
 
             function addDeviceComplete(xhr,status){
                 if(status!="success"){
@@ -150,6 +159,22 @@
               }
             }
 
+            function onPhotoDataSuccess(imageData) {
+
+              var smallImage = document.getElementById('smallImage');
+
+              smallImage.style.display = 'block';
+
+              smallImage.src = "data:image/jpeg;base64," + imageData;
+
+            }
+
+            function onFail(message) {
+
+              alert('Failed because: ' + message);
+
+            }
+
            function addDevice(){
             var device = document.getElementById("device").value;
             var description = document.getElementById("description").value;
@@ -166,7 +191,7 @@
            }
         </script>
 
-         <script type="text/javascript" src="js/index.js"></script>
+        <!--  <script type="text/javascript" src="js/index.js"></script> -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
