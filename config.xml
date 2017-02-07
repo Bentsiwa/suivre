@@ -3,7 +3,7 @@
   <name>Suivre</name>
   <description>Suivre</description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Apache Cordova Team </author>
-  <content src="index.html" />
+  <content src="adddevice.html" />
   <access origin="*" />
   <vs:features />
   <preference name="AndroidPersistentFileLocation" value="Compatibility" />
