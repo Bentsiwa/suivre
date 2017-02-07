@@ -75,6 +75,7 @@
 
                         
                         <a href="#addingimage" data-rel='popup' data-position-to='window' data-role='button' data-inline='true' data-transition='pop'class="ui-btn"><i class='zmdi zmdi-camera'></i> Upload Image</a>
+                        <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
                        <!-- <label for="select-choice-1b" class="select">Location: </label>
                         <select name="select-choice-1" id="select-choice-1b" data-native-menu="false">
                             <option value="Library">Library</option>
@@ -102,8 +103,8 @@
 
                 <div data-role="content">
                     <!-- <p>Are you sure you want to delete this device?</p> -->
-                    <button id="newimage" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"></i> Camera</button>
-                    <button id="gotogallery" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-cancel'></i> Gallery</button>
+                    <button onclick="capturePhoto();" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"></i> Camera</button>
+                    <button  onclick="getPhoto(pictureSource.PHOTOLIBRARY);" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-cancel'></i> Gallery</button>
 
                 </div>
             </div>
@@ -114,15 +115,92 @@
     <script >
           
           document.getElementById("add").addEventListener("click", addDevice);
-          document.getElementById("newimage").addEventListener("click", getImage);
-          function getImage(){
-            alert("camera");
-            navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-                quality : 50,
+      
+             var pictureSource;   // picture source
+            var destinationType; // sets the format of returned value 
 
-                destinationType : destinationType.DATA_URL
-              });
+            // Wait for Cordova to connect with the device
+            //
+            document.addEventListener("deviceready",onDeviceReady,false);
+
+            // Cordova is ready to be used!
+            //
+            function onDeviceReady() {
+                pictureSource=navigator.camera.PictureSourceType;
+                destinationType=navigator.camera.DestinationType;
+            }
+
+          // Called when a photo is successfully retrieved
+          //
+          function onPhotoDataSuccess(imageData) {
+            // Uncomment to view the base64 encoded image data
+            // console.log(imageData);
+
+            // Get image handle
+            //
+            var smallImage = document.getElementById('smallImage');
+
+            // Unhide image elements
+            //
+            smallImage.style.display = 'block';
+
+            // Show the captured photo
+            // The inline CSS rules are used to resize the image
+            //
+            smallImage.src = "data:image/jpeg;base64," + imageData;
           }
+
+          // Called when a photo is successfully retrieved
+          //
+          function onPhotoURISuccess(imageURI) {
+            // Uncomment to view the image file URI 
+            // console.log(imageURI);
+
+            // Get image handle
+            //
+            var largeImage = document.getElementById('largeImage');
+
+            // Unhide image elements
+            //
+            largeImage.style.display = 'block';
+
+            // Show the captured photo
+            // The inline CSS rules are used to resize the image
+            //
+            largeImage.src = imageURI;
+          }
+
+          // A button will call this function
+          //
+          function capturePhoto() {
+            // Take picture using device camera and retrieve image as base64-encoded string
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+              destinationType: destinationType.DATA_URL });
+          }
+
+          // A button will call this function
+          //
+          function capturePhotoEdit() {
+            // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+              destinationType: destinationType.DATA_URL });
+          }
+
+          // A button will call this function
+          //
+          function getPhoto(source) {
+            // Retrieve image file location from specified source
+            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+              destinationType: destinationType.FILE_URI,
+              sourceType: source });
+          }
+
+          // Called if something bad happens.
+          // 
+          function onFail(message) {
+            alert('Failed because: ' + message);
+          }
+
 
             function addDeviceComplete(xhr,status){
                 if(status!="success"){
@@ -159,21 +237,7 @@
               }
             }
 
-            function onPhotoDataSuccess(imageData) {
-
-              var smallImage = document.getElementById('smallImage');
-
-              smallImage.style.display = 'block';
-
-              smallImage.src = "data:image/jpeg;base64," + imageData;
-
-            }
-
-            function onFail(message) {
-
-              alert('Failed because: ' + message);
-
-            }
+       
 
            function addDevice(){
             var device = document.getElementById("device").value;
