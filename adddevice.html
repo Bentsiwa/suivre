@@ -42,81 +42,26 @@
             // Cordova is ready to be used!
             //
             function onDeviceReady() {
-                pictureSource=navigator.camera.PictureSourceType;
-                destinationType=navigator.camera.DestinationType;
-            }
+                // pictureSource=navigator.camera.PictureSourceType;
+                // destinationType=navigator.camera.DestinationType;
+                alert("workingl;");
+                 document.getElementById("newimage").onclick = function(){
+                  navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+                  destinationType: Camera.DestinationType.DATA_URL
+              });
+              }
+              alert("done");
+            };
 
-          // Called when a photo is successfully retrieved
-          //
-          function onPhotoDataSuccess(imageData) {
-            // Uncomment to view the base64 encoded image data
-            // console.log(imageData);
+         
 
-            // Get image handle
-            //
-            var smallImage = document.getElementById('smallImage');
-
-            // Unhide image elements
-            //
-            smallImage.style.display = 'block';
-
-            // Show the captured photo
-            // The inline CSS rules are used to resize the image
-            //
-            smallImage.src = "data:image/jpeg;base64," + imageData;
+          function onSuccess(imageData) {
+              var image = document.getElementById('smallImage');
+              image.src = "data:image/jpeg;base64," + imageData;
           }
 
-          // Called when a photo is successfully retrieved
-          //
-          function onPhotoURISuccess(imageURI) {
-            // Uncomment to view the image file URI 
-            // console.log(imageURI);
-
-            // Get image handle
-            //
-            var largeImage = document.getElementById('largeImage');
-
-            // Unhide image elements
-            //
-            largeImage.style.display = 'block';
-
-            // Show the captured photo
-            // The inline CSS rules are used to resize the image
-            //
-            largeImage.src = imageURI;
-          }
-
-          // A button will call this function
-          //
-          function capturePhoto() {
-            alert("working");
-            // Take picture using device camera and retrieve image as base64-encoded string
-            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-              destinationType: destinationType.DATA_URL });
-            alert("worked");
-          }
-
-          // A button will call this function
-          //
-          function capturePhotoEdit() {
-            // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
-            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
-              destinationType: destinationType.DATA_URL });
-          }
-
-          // A button will call this function
-          //
-          function getPhoto(source) {
-            // Retrieve image file location from specified source
-            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
-              destinationType: destinationType.FILE_URI,
-              sourceType: source });
-          }
-
-          // Called if something bad happens.
-          // 
           function onFail(message) {
-            alert('Failed because: ' + message);
+              alert('Failed because: ' + message);
           }
          </script>
 
@@ -193,7 +138,7 @@
 
                 <div data-role="content">
                     <!-- <p>Are you sure you want to delete this device?</p> -->
-                    <button onclick="capturePhoto();" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"></i> Camera</button>
+                    <button id="newimage" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"></i> Camera</button>
                     <button  onclick="getPhoto(pictureSource.PHOTOLIBRARY);" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-cancel'></i> Gallery</button>
 
                 </div>
