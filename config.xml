@@ -125,7 +125,7 @@
 <!-- 
   
  <plugin name="cordova-plugin-splashscreen"/> -->
-  <plugin name="cordova-plugin-camera"  />
+  <plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
   <plugin name="cordova-plugin-media-capture" />
 
   <plugin name="cordova-plugin-compat" />
