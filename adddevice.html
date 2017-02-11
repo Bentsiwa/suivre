@@ -90,6 +90,19 @@
 				
 				 
 			</div><!-- /content -->
+			<div data-role="popup" id="addingimage">
+
+                <div data-role="header">
+                  <h1 class='nd-title'>Upload Image</h1>
+              </div>
+
+                <div data-role="content">
+                    <!-- <p>Are you sure you want to delete this device?</p> -->
+                   <button class="ui-btn" id="capturePhoto"><i class='zmdi zmdi-camera'></i>Upload Image</button>
+                    <button  onclick="getPhoto(pictureSource.PHOTOLIBRARY);" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-cancel'></i> Gallery</button>
+
+                </div>
+            </div>
 		</div><!-- /page -->
 	
 
