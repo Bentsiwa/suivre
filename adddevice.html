@@ -34,22 +34,50 @@
 		<!-- your scripts here -->
 		
 		<script src="scripts/jquery.mobile.js"></script>
-		<title>app</title>
+		
+		   <style>
+                    /* Prevent FOUC */
+                body { opacity: 0; }
+             </style>
 	</head>
 	<body>
 	   <div data-role="page" id="landingPage" style="background: white">
 
-			<div data-role="header" style="text-shadow: none">
-				<h1>tutorial</h1>
-				<a href="index.html" data-role="button" data-icon="refresh" data-iconpos="notext" style="background: white;border: none;">Refresh</a>
-			</div><!-- /header -->
-			<img src="img/carpool.jpg" />
-			<div data-role="content" style="text-shadow: none">
-				<a href="#declareRegions" data-transition="flip">
-				<button>
-					Declare
-				</button> </a>
-				<br />
+			 <nd2-include data-src="panel.left.html"></nd2-include>
+
+            <div data-role="panel" id="bottomsheet" data-animate="false" data-position='bottom' data-display="overlay">
+                <nd2-include data-src="bottom.sheet.html"></nd2-include>
+            </div>
+
+            <div data-role="header" data-position="fixed" >
+
+                <a href="#bottomsheet" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-more-vert"></i></a>
+                <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.1s'><i class="zmdi zmdi-menu"></i></a>
+                <h1 class="wow fadeIn" data-wow-delay='0.4s'>Add Device</h1>
+
+            </div>
+            <div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s"  data-inset="false">
+                <br><br>
+                    <div class="row">
+                    <div class="col-xs-1 col-sm-3 col-md-4">
+                    </div>
+
+                    <div class="col-xs-10 col-sm-6 col-md-4">
+                        <div class="box">
+
+                        <label for="device">Name:</label>
+                        <input type="text" name="device" id="device" value="" data-clear-btn="true" placeholder="Iphone 6">
+
+                        
+                        <label for="description">Description:</label>
+                        <textarea cols="40" rows="8" name="description" id="description" placeholder=""></textarea>
+
+                        <label for="tag">Tag ID:</label>
+                        <input type="text" name="tag" id="tag" value="" data-clear-btn="true" placeholder="001">
+
+                        
+                        <a href="#addingimage" data-rel='popup' data-position-to='window' data-role='button' data-inline='true' data-transition='pop'class="ui-btn"><i class='zmdi zmdi-camera'></i> Upload Image</a>
+            
 				<a href="#results" data-transition="slide">
 				<button>
 					Results
@@ -87,6 +115,10 @@
 				 
 			</div><!-- /content -->
 		</div><!-- /page -->
+	</div>
+</div>
+</div>
+</div>
 
 	<script >
           
