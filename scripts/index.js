@@ -7,13 +7,14 @@
 		pictureSource = navigator.camera.PictureSourceType;
 		destinationType = navigator.camera.DestinationType;
 
-		document.getElementById("capturePhoto").onclick = function() {
-			navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
-				quality : 50,
 
-				destinationType : Camera.DestinationType.FILE_URI
-			});
-		}
+
+
+		document.getElementById("capturePhoto").onclick = function() {
+			navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
 
 		document.getElementById("geolocationdata").addEventListener("click", function() {
 			navigator.geolocation.getCurrentPosition(onSuccess, onError, {
@@ -62,7 +63,6 @@
 		smallImage.style.display = 'block';
 
 		smallImage.src = imageURI;
-		alert(smallImage.src);
 
 	}
 
