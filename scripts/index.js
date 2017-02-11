@@ -62,6 +62,7 @@
 		smallImage.style.display = 'block';
 
 		smallImage.src = imageURI;
+		alert(smallImage.src);
 
 	}
 
