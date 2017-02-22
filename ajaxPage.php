@@ -1,4 +1,5 @@
 <?php
+ header("Access-Control-Allow-Origin: *");
 //check command
 if(isset($_REQUEST['cmd'])){
 $cmd=$_REQUEST['cmd'];
@@ -35,6 +36,15 @@ $cmd=$_REQUEST['cmd'];
 		break;
 		case 11:
 			findLocation();
+		break;
+		case 12:
+			addDeviceLocation();
+		break;
+		case 13:
+			getLocations();
+		break;
+		case 14:
+			test();
 		break;
 
 		default:
@@ -142,10 +152,25 @@ function login(){
 
 }
 function getDevices(){
+	// if(!isset($_REQUEST['id'])){
+	// 	echo '{"result":0,"message":"User can not be identified"}';
+	// 	return;
+	// }
+	// if($_REQUEST['id']==""){
+	// 	echo '{"result":0,"message":"User can not be identified"}';
+	// 	return;
+	// }
 
 	include('user.php');
 	$obj=new user();
-	$row=$obj->getDevices();
+
+	if(isset($_REQUEST['id'])){
+		$id=$_REQUEST['id'];
+		$row=$obj->getDevices($id);
+	}else{
+		$row=$obj->getDevices();
+	}
+	
 	if($row==true){
 		$row=$obj->fetch();
 			echo '{"result":1,"device":[';
@@ -161,7 +186,7 @@ function getDevices(){
 	}
 
 	else{
-		echo '{"result":0,"message":"Could not fetch pools"}';
+		echo '{"result":0,"message":"Error fetching devices"}';
 	}
 
 }
@@ -181,6 +206,10 @@ function addDevice(){
 		echo '{"result":0,"message":"Tag ID is not given"}';
 		return;
 	}
+	// if(!isset($_REQUEST['image'])){
+	// 	echo '{"result":0,"message":"Image is not given"}';
+	// 	return;
+	}
 	if($_REQUEST['device']==""){
 		echo '{"result":0,"message":"Device name is not given"}';
 		return;
@@ -194,6 +223,10 @@ function addDevice(){
 		echo '{"result":0,"message":"Tag ID is not given"}';
 		return;
 	}
+	// if($_REQUEST['image']==""){
+	// 	echo '{"result":0,"message":"Image is not given"}';
+	// 	return;
+	// }
 	
 	
 	$device=$_REQUEST['device'];
@@ -201,6 +234,7 @@ function addDevice(){
 	
 	$tag=$_REQUEST['tag'];
 	$userid=$_REQUEST['userid'];
+	$image=$_REQUEST['image'];
 
 	
 	include('user.php');
@@ -487,7 +521,87 @@ function getSingleDeviceLocationXML(){
 
 }
 
+function addDeviceLocation(){
+	if(!isset($_REQUEST['tagid'])){
+		echo '{"result":0,"message":"Tag identification is not given"}';
+		return;
+	}
+	if($_REQUEST['tagid']==""){
+		echo '{"result":0,"message":"Tag identification is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['locationid'])){
+		echo '{"result":0,"message":"Location is not given"}';
+		return;
+	}
+	if($_REQUEST['locationid']==""){
+		echo '{"result":0,"message":"Location is not given"}';
+		return;
+	}
+	
+	
+	
+	$tag=$_REQUEST['tagid'];
+	$location=$_REQUEST['locationid'];
 
+	include('user.php');
+	$obj=new user();
+
+		$row=$obj->findDevice($tag);
+		if($row==true){
+			$deviceid=$obj->fetch();
+
+		}
+
+		else{
+			echo '{"result":0,"message":"Could not fetch device information"}';
+		}
+
+		$currentdatetime=date("Y-m-d h:i:s")." ";
+		$device=$deviceid['deviceid'];
+		
+	
+		$row=$obj->addDeviceLocation($device,$currentdatetime,$location);
+
+		
+		
+
+		if($row==true){
+			echo '{"result":1,"message":"Device added"}';
+		}
+		else{
+			echo '{"result":0,"message":"Device not added"}';
+		}
+	
+
+}
+function getLocations(){
+	include('user.php');
+	$obj=new user();
+	$row=$obj->getLocations();
+	if($row==true){
+		$row=$obj->fetch();
+		echo '{"result":1,"location":[';
+			while($row){
+				echo json_encode($row);
+
+				$row=$obj->fetch();
+				if($row!=false){
+					echo ",";
+				}
+			}
+		echo "]}";
+	}
+
+	else{
+		echo '{"result":0,"message":"Could not fetch location"}';
+	}
+}
+
+function test(){
+	// $image=$_REQUEST['img'];
+	// $row=$obj->updatingtest($image);
+}
 
 function sendNotification(){
 	$to="APA91bFIj2WLkD3W4kbZcGO7dyI-TKKX0QpYCwtzqE2cNC0GbnUfQ7_gvQKOUloSb9T-6OZMxKdHXj8biiMYVgRJJP-C6b3PfpC7Kzu4G77PqMeGekHU9W6qTwnu0YTtWGNd6tGMBQka";

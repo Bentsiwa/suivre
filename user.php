@@ -63,6 +63,7 @@
 			name='$device',
 			description ='$description',
 			tagidentification='$tag',
+			image='img/green.jpg',
 			userid='$id'";
 							
 			return $this->query($strQuery);
@@ -80,8 +81,12 @@
 
 		}
 		
-		function getDevices(){
+		function getDevices($id=false){
 			$strQuery="select * from device";
+
+			if($id!=false){
+                $strQuery=$strQuery . " where userid=$id";
+            }
 			
 			return $this->query($strQuery);
 		}
@@ -103,7 +108,37 @@
 			$strQuery="delete from device where deviceid='$deviceid'";
 			return $this->query($strQuery);
 		}
+
+		function addDeviceLocation($device,$currentdatetime,$location){
+			$strQuery="insert into devicelocation set
+			deviceid='$device',
+			locationid ='$location',
+			time='$currentdatetime'";
+							
+			return $this->query($strQuery);
+		}
+
+
+		function findDevice($tag){
+				$strQuery="select deviceid from device where tagidentification='$tag'";
+
+							
+			return $this->query($strQuery);
+		}
+
+		function getLocations(){
+			$strQuery="select * from location";
+			
+			return $this->query($strQuery);
+		}
+
+		function updatingtest($image){
+			$strQuery="update device set
+			image='$image'
+			where deviceid=21";
+			return $this->query($strQuery);
+
+		}
 	}
 
 ?>
-

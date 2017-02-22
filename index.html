@@ -71,7 +71,7 @@
 	                <button style="background-color:#00b3b3; color:white;" id="login" class="ui-btn">Login</button>
                  </div>
                  <br>
-                 <h6 class="clr-white" >Don't have an account? <a  class="clr-white" href="register.html"><b class="clr-white">Sign up</b></a></h6>
+                 <h6 class="clr-white" >Don't have an account? <a href="" class="clr-white" id="register"><b class="clr-white">Sign up</b></a></h6>
 
              </div>
          </form>
@@ -84,42 +84,42 @@
 		<script>
 		  // Initialize Firebase
 		  
-		  var config = {
-		    apiKey: "AIzaSyDFTaM3V2z_I2FKTFnLrYsRFqsf2K1F-u8",
-		    authDomain: "suivre-156322.firebaseapp.com",
-		    databaseURL: "https://suivre-156322.firebaseio.com",
-		    storageBucket: "suivre-156322.appspot.com",
-		    messagingSenderId: "81511517930"
-		  };
-		  firebase.initializeApp(config);
+		 //  var config = {
+		 //    apiKey: "AIzaSyDFTaM3V2z_I2FKTFnLrYsRFqsf2K1F-u8",
+		 //    authDomain: "suivre-156322.firebaseapp.com",
+		 //    databaseURL: "https://suivre-156322.firebaseio.com",
+		 //    storageBucket: "suivre-156322.appspot.com",
+		 //    messagingSenderId: "81511517930"
+		 //  };
+		 //  firebase.initializeApp(config);
 		
-			  const messaging = firebase.messaging();
-			 messaging.requestPermission()
-			.then(function() {
-			 // alert('Notification permission granted.');
-			  return messaging.getToken();
-			  // TODO(developer): Retrieve an Instance ID token for use with FCM.
-			  // ...
-			})
-			.then(function(token){
-				//alert(token);
-				//sending data
-				// var firebaseRef=firebase.database().ref();
- 			// 	firebaseRef.push().set("Me notification");
- 				//retrieving data
- 				var firebaseHeadingRef=firebase.database().ref().child("Hello");
- 				firebaseHeadingRef.on('value',function(datasnapshot){
- 					//alert(datasnapshot.val());
- 				})
-			})
-			.catch(function(err) {
-			  alert('Unable to get permission to notify.', err);
-			});
+			//   const messaging = firebase.messaging();
+			//  messaging.requestPermission()
+			// .then(function() {
+			//  // alert('Notification permission granted.');
+			//   return messaging.getToken();
+			//   // TODO(developer): Retrieve an Instance ID token for use with FCM.
+			//   // ...
+			// })
+			// .then(function(token){
+			// 	//alert(token);
+			// 	//sending data
+			// 	// var firebaseRef=firebase.database().ref();
+ 		// 	// 	firebaseRef.push().set("Me notification");
+ 		// 		//retrieving data
+ 		// 		var firebaseHeadingRef=firebase.database().ref().child("Hello");
+ 		// 		firebaseHeadingRef.on('value',function(datasnapshot){
+ 		// 			//alert(datasnapshot.val());
+ 		// 		})
+			// })
+			// .catch(function(err) {
+			//   alert('Unable to get permission to notify.', err);
+			// });
 
-			messaging.onMessage(function(payload) {
-			  alert("Message received. ", payload);
-			  // ...
-			});
+			// messaging.onMessage(function(payload) {
+			//   alert("Message received. ", payload);
+			//   // ...
+			// });
 
 
 
@@ -127,6 +127,7 @@
 		<script >
 		  
 		  document.getElementById("login").addEventListener("click", login);
+		  document.getElementById("register").addEventListener("click", register);
 
 			function loginComplete(xhr,status){
 		        if(status!="success"){
@@ -168,11 +169,14 @@
     		localStorage.setItem("password",password);
 
 		      var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=2&email="+email+"&password="+password;
-		  //prompt('url',ajaxPageUrl);
+		 // prompt('url',ajaxPageUrl);
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:loginComplete
 		      });
+		   }
+		   function register(){
+		   		window.location.href="register.html";
 		   }
 		</script>
 		<script type="text/javascript" src="js/index.js"></script>

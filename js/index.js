@@ -53,18 +53,21 @@
 	 //  var map = new google.maps.Map(mapCanvas, mapOptions);
 
 	};
-
+	 var d = new Date();
+	 var n = d.getTime();
 
 	function onMapInit(map) {
 	}
 
 	function onPhotoDataSuccess(imageData) {
+		
 
 		var smallImage = document.getElementById('smallImage');
 
 		smallImage.style.display = 'block';
 
 		smallImage.src = "data:image/jpeg;base64," + imageData;
+		//movePic(imageData);
 
 	}
 
@@ -106,5 +109,67 @@
 	 function onBarcodeFail(error) {
 	          alert("Scanning failed: " + error);
 	      	}
+
+
+	 function movePic(file){ 
+    	window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError); 
+	} 
+
+	//Callback function when the file system uri has been resolved
+	function resolveOnSuccess(entry){ 
+	   
+	    //new file name
+	    var newFileName = n + ".jpg";
+	    var myFolderApp = "Suivre";
+
+	    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
+	    //The folder is created if doesn't exist
+	    fileSys.root.getDirectory( myFolderApp,
+	                    {create:true, exclusive: false},
+	                    function(directory) {
+	                        entry.moveTo(directory, newFileName,  successMove, resOnError);
+	                    },
+	                    resOnError);
+	                    },
+	    resOnError);
+	}
+
+//Callback function when the file has been moved successfully - inserting the complete path
+function successMove(entry) {
+    //I do my insert with "entry.fullPath" as for the path
+    alert("worked");
+    alert(entry.Suivre+"/"+n);
+}
+
+function resOnError(error) {
+    alert(error.code);
+    
+}
+ function getPhoto(source) {
+      // Retrieve image file location from specified source
+      alert("here");
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
+  function onPhotoURISuccess(imageURI) {
+      // Uncomment to view the image file URI
+       alert(imageURI);
+
+      // Get image handle
+      //
+      var largeImage = document.getElementById('largeImage');
+
+      // Unhide image elements
+      //
+      largeImage.style.display = 'block';
+
+      // Show the captured photo
+      // The in-line CSS rules are used to resize the image
+      //
+      largeImage.src = imageURI;
+    }
+
+
 
 })();

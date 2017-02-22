@@ -67,6 +67,8 @@
 		<script >
 		   document.getElementById("adduser").addEventListener("click", addUser);
 
+		 
+
 		    function addUserComplete(xhr,status){
 		        if(status!="success"){
 		          alert("error while adding user");
@@ -92,10 +94,10 @@
 		    var email = document.getElementById("email").value;
 		    var password = document.getElementById("password").value;
 		    var phonenum = document.getElementById("phonenum").value;
-		    
+		 
 		    
 		    var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=1&firstname="+firstname+"&lastname="+lastname+"&email="+email+"&phone="+phonenum+"&password="+password;
-		   
+		  // prompt('url',ajaxPageUrl);
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:addUserComplete

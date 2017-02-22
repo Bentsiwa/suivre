@@ -48,8 +48,8 @@
 
             <div data-role="header" data-position="fixed" >
 
-                <a href="#bottomsheet" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-more-vert"></i></a>
-                <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.1s'><i class="zmdi zmdi-menu"></i></a>
+                <a href="#bottomsheet" class="ui-btn ui-btn-right"><i class="zmdi zmdi-more-vert"></i></a>
+                <a href="#leftpanel" class="ui-btn ui-btn-left"><i class="zmdi zmdi-menu"></i></a>
                 <h1 class="wow fadeIn" data-wow-delay='0.4s'>Start Tracking</h1>
 
             </div>
@@ -62,26 +62,27 @@
                     <div class="col-xs-10 col-sm-6 col-md-4">
                         <div class="box">
 
-                         <label for="device" class="select">Device</label>
-                        <select  id="devicelist" data-native-menu="false">
-                            <!-- <option value="javascript">JavaScript</option>
-                            <option value="css">CSS</option>
-                            <option value="html">HTML</option>
-                            <option value="csharp">C#</option>
-                            <option value="java">Java</option> -->
-
-                        </select>
-                        <br>
-
-                        
-                         <label for="location" class="select">Current Location</label>
-                        <select name="select-choice-1" id="location" data-native-menu="false">
+                         <label for="device" id="devicelist" class="select">Device</label>
+                        <!-- <select  id="devicelist" data-native-menu="false">
                             <option value="javascript">JavaScript</option>
                             <option value="css">CSS</option>
                             <option value="html">HTML</option>
                             <option value="csharp">C#</option>
                             <option value="java">Java</option>
-                        </select>
+
+
+                        </select> -->
+                        <br>
+
+                        
+                         <label for="location" id="locationlist" class="select">Current Location</label>
+                      <!--   <select name="select-choice-1" id="location" data-native-menu="false">
+                            <option value="javascript">JavaScript</option>
+                            <option value="css">CSS</option>
+                            <option value="html">HTML</option>
+                            <option value="csharp">C#</option>
+                            <option value="java">Java</option>
+                        </select> -->
                         <br><br>
 
                         
@@ -107,7 +108,7 @@
       function getDevices(){
     
           var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=4";
-          
+          //prompt('url',ajaxPageUrl);
           $.ajax(ajaxPageUrl,{
             async:true,
             complete:getDevicesComplete
@@ -126,17 +127,65 @@
                 alert(obj.message);
               }
               else{
-                 var result="";
+                 //var result="";
                   var length=obj.device.length;
-                  
+
+                
+                  var data = '<label for="device" class="select">Device</label><select name="select-choice-1" id="device" data-native-menu="false">';
                   while(length>0){
-                    result+="<option value='device'>"+obj.device[length-1].name+"</option>";
+                    data+="<option value='device'>"+obj.device[length-1].name+"</option>";
                    
                  
                    length-=1;
                  }
-                  alert(result);
-                 devicelist.innerHTML=result;
+                 data+='</select>';
+               
+                 devicelist.innerHTML=data;
+                 getLocations();
+
+                 
+  
+            }
+          }
+        }
+
+
+        function getLocations(){
+    
+          var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=13";
+          //prompt('url',ajaxPageUrl);
+          $.ajax(ajaxPageUrl,{
+            async:true,
+            complete:getLocationsComplete
+          });
+       }
+
+      function getLocationsComplete(xhr,status){
+            if(status!="success"){
+              alert("Error during login");
+              return;
+            }
+            else{
+              var obj=JSON.parse(xhr.responseText);
+             
+              if(obj.result==0){
+                alert(obj.message);
+              }
+              else{
+                   var length=obj.location.length;
+                  
+                
+                  var data = '<label for="location" class="select">Current Location</label><select name="select-choice-1" id="location" data-native-menu="false">';
+                  while(length>0){
+                    data+="<option value='device'>"+obj.location[length-1].placename+"</option>";
+                   
+                 
+                   length-=1;
+                 }
+                 data+='</select>';
+               
+                 locationlist.innerHTML=data;
+                 
   
             }
           }

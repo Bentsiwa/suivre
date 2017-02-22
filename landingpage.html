@@ -106,338 +106,28 @@
 
 			<div data-role="header" data-position="fixed" >
 				<a href="#bottomsheet" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-more-vert"></i></a>
-				<a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.1s'><i class="zmdi zmdi-menu"></i></a>
+				<a href="#leftpanel" class="ui-btn ui-btn-left"><i class="zmdi zmdi-menu"></i></a>
 				<h1 class="wow fadeIn" data-wow-delay='0.2s'>Suivre</h1>
 			</div>
 
 			<div role="main" class="ui-content" data-inset="false">
-				<a href="starttracking.html" class="float">
+				<a href="" id="tracking" class="float">
 					<i class="material-icons my-float" style="color:white;">location_searching</i>
 				</a>
 				<div class="label-container">
-				<div class="label-text">Start Tracking</div>
+				<div class="label-text"></div>
 				<i class="fa fa-play label-arrow"></i>
 				</div>
 				<ul data-role="listview" data-icon="false">
 				<li data-role="list-divider">
 					Devices
+					<!-- <a href="untitled.html">Untitled</a> -->
 				</li>
 
 				<div id="devices">
-			<!-- 	<div class="row">
-
-					<div class="col-xs-6">
-						<div class="box">
-
-
-							<!-- Media Overlay no Background !-->
-
-							<!-- <div class="nd2-card">
-
-								<a href="devicepage.html" >
-								<div class="card-media">
-									<img src="img/laptop.jpg">
-
-									<div class='card-media-overlay'>
-
-										<div class="card-title has-supporting-text">
-											<h3 class="nd2-subhead clr-white">HP laptop</h3>
-										</div>
-
-									</div>
-
-								</div>
-							</a>
-
-
-								<div class="card-action">
-									
-									<div class="row between-xs">
-										<div class="col-xs-12 align-right">
-											<div class="box">
-												<!-- <a href="devicepage.html" class="ui-btn ui-btn-inline">VIEW</a> -->
-												<!-- <a href="editdevice.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-edit '></i></a>
-												<a href="#delete" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-delete '></i></a>
-												<a href="map.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-pin clr-red'></i></a>
-												
-											</div>
-										</div>
-									
-									</div>
-								</div>
-
-							</div>
-
-
-						</div>
-					</div>
-
-					<div class="col-xs-6">
-						<div class="box"> -->
-
-							<!-- Media Overlay no Background !-->
-
-							<!-- <div class="nd2-card">
-
-
-								<a href="devicepage.html" >
-								<div class="card-media">
-									<img src="img/laptop.jpg">
-
-									<div class='card-media-overlay'>
-
-										<div class="card-title has-supporting-text">
-											<h3 class="nd2-subhead clr-white">Iphone 6</h3>
-
-										</div>
-
-									</div>
-
-								</div> -->
-								<!-- 	<h6 class="card-supporting-text ">
-										Location: Library
-									</h6> -->
-
-						<!-- 		<div class="card-action">
-									<div class="row between-xs">
-										<div class="col-xs-12 align-right">
-											
-											<div class="box">
-												<a href="editdevice.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-edit '></i></a>
-												<a href="#delete" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-delete '></i></a>
-												<a href="map.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-pin clr-red'></i></a>	
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-
-
-						</div>
-					</div>
-
-				</div>
-				<div class="row">
-
-					<div class="col-xs-6">
-						<div class="box">
- -->
-
-							<!-- Media Overlay no Background !-->
-
-							<!-- <div class="nd2-card"> -->
-<!-- 
-
-								<a href="devicepage.html" >
-								<div class="card-media">
-									<img src="img/laptop.jpg">
-
-									<div class='card-media-overlay'>
-
-										<div class="card-title has-supporting-text">
-											<h3 class="nd2-subhead clr-white">HP laptop</h3>
-										</div>
-
-									</div>
-
-								</div>
-
-
-								<div class="card-action">
-									<div class="row between-xs">
-										<div class="col-xs-12 align-right">
-											<div class="box">
-												<a href="editdevice.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-edit '></i></a>
-												<a href="#delete" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-delete '></i></a>
-												<a href="map.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-pin clr-red'></i></a>	
-												
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-
-
-						</div>
-					</div>
-
-					<div class="col-xs-6">
-						<div class="box"> -->
-
-							<!-- Media Overlay no Background !-->
-
-							<!-- <div class="nd2-card">
-
-
-								<a href="devicepage.html" >
-								<div class="card-media">
-									<img src="img/laptop.jpg">
-
-									<div class='card-media-overlay'>
-
-										<div class="card-title has-supporting-text">
-											<h3 class="nd2-subhead clr-white">Iphone 6</h3>
-
-										</div>
-
-									</div>
-
-								</div> -->
-								<!-- 	<h6 class="card-supporting-text ">
-										Location: Library
-									</h6> -->
-
-								<!-- <div class="card-action">
-									<div class="row between-xs">
-										<div class="col-xs-12 align-right">
-											
-											<div class="box">
-												<a href="editdevice.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-edit '></i></a>
-												<a href="#delete" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-delete '></i></a>
-												<a href="map.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-pin clr-red'></i></a>						
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-
-
-						</div>
-					</div>
-
-				</div>
-				<div class="row">
-
-					<div class="col-xs-6">
-						<div class="box"> -->
-
-
-							<!-- Media Overlay no Background !-->
-
-							<!-- <div class="nd2-card">
-
-
-								<div class="card-media">
-									<img src="img/laptop.jpg">
-
-									<div class='card-media-overlay'>
-
-										<div class="card-title has-supporting-text">
-											<h3 class="nd2-subhead clr-white">HP laptop</h3>
-										</div>
-
-									</div>
-
-								</div>
-
-
-								<div class="card-action">
-									<div class="row between-xs">
-										<div class="col-xs-12 align-right">
-											<div class="box">
-												<a href="editdevice.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-edit '></i></a>
-												<a href="#delete" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-delete '></i></a>
-												<a href="map.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-pin clr-red'></i></a>	
-												
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-
-
-						</div>
-					</div>
-
-					<div class="col-xs-6">
-						<div class="box"> -->
-
-							<!-- Media Overlay no Background !-->
-<!-- 
-							<div class="nd2-card">
-
-
-								<div class="card-media">
-									<img src="img/laptop.jpg">
-
-									<div class='card-media-overlay'>
-
-										<div class="card-title has-supporting-text">
-											<h3 class="nd2-subhead clr-white">Iphone 6</h3>
-
-										</div>
-
-									</div>
-
-								</div> -->
-								<!-- 	<h6 class="card-supporting-text ">
-										Location: Library
-									</h6> <a href="#popupDialog" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop"><i class='lIcon fa fa-external-link'></i> Open popup dialog</a>-->
-
-
-						<!-- 		<div class="card-action">
-									<div class="row between-xs">
-										<div class="col-xs-12 align-right">
-											
-											<div class="box">
-
-												<a href="editdevice.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-edit '></i></a>
-												<a href="#delete" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-delete '></i></a>
-												<a href="map.html" class="ui-btn ui-btn-inline ui-btn-fab"><i class='zmdi zmdi-pin clr-red'></i></a>								
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-
-
-						</div>
-					</div>
-
-				</div> -->
-		<!-- 	</div>  -->
-				<!-- <li>
-					<a href="devicepage.html">
-						<img src="img/phone.jpg" class="ui-thumbnail ui-thumbnail-circular" />
-						<h2>iphone 6</h2>
-						<p><button class="ui-btn ui-btn-inline ui-btn-fab ui-mini"><i class='zmdi zmdi-pin zmd-2x clr-red'></i></button>Current location: Library</p>
-					</a>
-				</li>
-				<li>
-					<a href="devicepage.html">
-						<img src="img/laptop.jpg" class="ui-thumbnail ui-thumbnail-circular" />
-						<h2>HP 2016</h2>
-						<p><button class=" ui-btn ui-btn-inline ui-btn-fab ui-mini "><i class="zmdi zmdi-pin zmd-2x clr-red"></i></button>Current location: Big ben cafetaria</p>
-					</a>
-				</li>
-				<li>
-					<a href="devicepage.html">
-						<img src="img/dress.jpg" class="ui-thumbnail ui-thumbnail-circular" />
-						<h2>Polker dot dress</h2>
-						<p><button class=" ui-btn ui-btn-inline ui-btn-fab ui-mini "><i class="zmdi zmdi-pin zmd-2x clr-red"></i></button>Current location: Hostel</p>
-
-					</a>
-				</li> -->
+			
 			</ul>
-			<div data-role="popup" id="delete">
-
-                <div data-role="header">
-                	<h1 class='nd-title'>Confirm delete</h1>
-            	</div>
-
-                <div data-role="content">
-                    <p>Are you sure you want to delete this device?</p>
-                    <button onclick="continueDelete()" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-check'></i> Yes</button>
-                    <button data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary"><i class='zmdi zmdi-cancel'></i> No</button>
-
-                </div>
-            </div>
-
+		
            
 
 			</div>
@@ -479,35 +169,41 @@
 		var newdeviceid="";
 		
 
-		 //document.getElementById("editdevice").addEventListener("click", editdevice);
+		 document.getElementById("tracking").addEventListener("click", starttracking);
+
+		 	function starttracking(){
+		 		window.location.href="starttracking.html";
+		 	}
 
 			function continueDelete(){
 			
 			}
-
-			
-
-		   function editdevice(deviceid,name,description,tagidentification,locationid,image){
-		   //window.location.href=editdevice.html";
-
-		   	window.location.href="editdevice.html?deviceid="+deviceid+"&name="+name+"&description="+description+"&tagidentification="+tagidentification+"&locationid="+locationid+"&image="+image;
-
-		  
-		   }
-
-		   function viewDevice(deviceid,name,description,tagidentification,locationid,image){
-		   //window.location.href=editdevice.html";
+			function viewDevice(deviceid,name,description,tagidentification,locationid,image){
+		 
 
 		   	window.location.href="devicepage.html?deviceid="+deviceid+"&name="+name+"&description="+description+"&tagidentification="+tagidentification+"&locationid="+locationid+"&image="+image;
 
 		  
 		   }
 
+			
+
+		   function editdevice(deviceid,name,description,tagidentification,locationid,image){
+		   //window.location.href=editdevice.html";
+		  
+
+		   	window.location.href="editdevice.html?deviceid="+deviceid+"&name="+name+"&description="+description+"&tagidentification="+tagidentification+"&locationid="+locationid+"&image="+image;
+
+		  
+		   }
+
+		 
+
 		   function deleteDevice(deviceid,name,description,tagidentification,locationid,image){
 		   	//window.location.href=editdevice.html";
 		   	// window.location.href="deletedevice.html?deviceid="+deviceid+"&name="+name+"&description="+description+"&tagidentification="+tagidentification+"&locationid="+locationid+"&image="+image;
 		   		// newdeviceid=deviceid;
-		   		var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=6&deviceid="+deviceid;
+		   		var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=6&deviceid="+deviceid;
 		  		
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
@@ -551,8 +247,10 @@
             }
 
               function getDevices(){
+              	var userid=localStorage.getItem("id");
+              
 		
-		      var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=4";
+		      var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=4&id="+userid;
 		  		
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
@@ -574,15 +272,18 @@
 		          else{
 		             var result="";
 		              var length=obj.device.length;
+		              if(length<=0){
+		              	alert("No device has been added");
+		              }
 		              
 		              while(length>0){
 		              	if(length==1){
-		              		result+="<div class='row'><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img src='"+obj.device[length-1].image+"'><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></a><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit '></i></button><button onclick='deleteDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' data-rel='popup' data-position-to='window' data-role='button' data-inline='true' data-transition='pop' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-delete '></i></button><a href='singledevicemap.html?placename="+obj.device[length-1].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-red'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div></div>";
+		              		result+="<div class='row'><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img src='"+obj.device[length-1].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></a><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit  clr-teal'></i></button><a href='singledevicemap.html?placename="+obj.device[length-1].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div></div>";
 		              	}
 		              	else{
 		              		
 
-		              	result+="<div class='row'><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img src='"+obj.device[length-1].image+"'><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></button><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit '></i></button></button><button  onclick='deleteDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' data-rel='popup' data-position-to='window' data-role='button' data-inline='true' data-transition='pop' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-delete '></i></button><a href='singledevicemap.html?placename="+obj.device[length-2].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-red'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")'><div class='card-media'><img src='"+obj.device[length-2].image+"'><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-2].name+"</h3></div></div></div><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit '></i></button><button onclick='deleteDevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")' data-rel='popup' data-position-to='window' data-role='button' data-inline='true' data-transition='pop' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-delete '></i></button><a href='singledevicemap.html?placename="+obj.device[length-2].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-red'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div>";
+		              	result+="<div class='row'><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img src='"+obj.device[length-1].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></button><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit clr-teal'></i></button></button><a href='singledevicemap.html?placename="+obj.device[length-2].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")'><div class='card-media'><img src='"+obj.device[length-2].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-2].name+"</h3></div></div></div><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit clr-teal'></i></button><a href='singledevicemap.html?placename="+obj.device[length-2].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div>";
 		              }
 		                 
 		             

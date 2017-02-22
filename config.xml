@@ -130,6 +130,7 @@
 
   <plugin name="cordova-plugin-compat" />
   <plugin name="cordova-plugin-file"  />
+  <plugin name="cordova-plugin-dialogs"/>
 <!--   <plugin name="phonegap-plugin-push"/>
    <plugin name="cordova-google-play-services"/> -->
  <!--  <plugin name="cordova-plugin-geolocation"/> -->
