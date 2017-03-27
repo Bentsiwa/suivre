@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Suivre</title>
+  <head>
+    <title>Suivre</title>
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="msapplication-tap-highlight" content="no">
-		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
-		<!-- Path to your custom app styles-->
-		 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <!-- Path to your custom app styles-->
+     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
         <link rel="stylesheet" href="vendor/waves/waves.min.css" />
         <link rel="stylesheet" href="vendor/wow/animate.css" />
         <link rel="stylesheet" href="css/nativedroid2.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <script>
 
-			var userAgent = navigator.userAgent + '';
-			if (userAgent.indexOf('iPhone') > -1) {
-				document.write('<script src="js/lib/cordova-iphone.js"></sc' + 'ript>');
-				var mobile_system = 'iphone';
-			} else if (userAgent.indexOf('Android') > -1) {
-				document.write('<script src="js/lib/cordova-android.js"></sc' + 'ript>');
-				var mobile_system = 'android';
-			} else {
-				var mobile_system = '';
-			}
-		</script>
+      var userAgent = navigator.userAgent + '';
+      if (userAgent.indexOf('iPhone') > -1) {
+        document.write('<script src="js/lib/cordova-iphone.js"></sc' + 'ript>');
+        var mobile_system = 'iphone';
+      } else if (userAgent.indexOf('Android') > -1) {
+        document.write('<script src="js/lib/cordova-android.js"></sc' + 'ript>');
+        var mobile_system = 'android';
+      } else {
+        var mobile_system = '';
+      }
+    </script>
 
-	
-		
-		   <style>
+  
+    
+       <style>
                     /* Prevent FOUC */
                 body { opacity: 0; }
              </style>
-	</head>
-	<body>
-	   <div data-role="page" id="landingPage" style="background: white">
+  </head>
+  <body>
+     <div data-role="page" id="landingPage" style="background: white">
 
-			 <nd2-include data-src="panel.left.html"></nd2-include>
+       <nd2-include data-src="panel.left.html"></nd2-include>
 
             <div data-role="panel" id="bottomsheet" data-animate="false" data-position='bottom' data-display="overlay">
                 <nd2-include data-src="bottom.sheet.html"></nd2-include>
@@ -73,19 +73,19 @@
                         <label for="tag">Tag ID:</label>
                         <input type="text" name="tag" id="tag" value="" data-clear-btn="true" placeholder="001">
 
-                        <button id"photolibrary">From Photo Library</button><br>
+                       <!--  <button id"photolibrary">From Photo Library</button><br> -->
                         
 
                         <button  class="ui-btn" id="fileupload" ><i class='zmdi zmdi-file'></i> Upload a Photo</button>
                         <center><div class="clr-blue-grey nd2-subhead">
                             Or
                           </div></center> <input type="file" id="pic" style="display:none">
-				          <button class="ui-btn" id="capturePhoto"><i class='zmdi zmdi-camera'></i>Take a photo</button>	<br />
+                  <button class="ui-btn" id="capturePhoto"><i class='zmdi zmdi-camera'></i>Take a photo</button>  <br />
                   <div><center><img id="smallImage" style="width:150px;height:180px;"  src="#" /></center></div>
                    
-				  	<br />
+            <br />
 
-				</div>
+        </div>
                         <br>
                         <button id="add" class="ui-btn ui-btn-raised clr-primary">Add </button>
                       
@@ -107,14 +107,14 @@
 
                 </div>
             </div>
-				
-				 
-			</div><!-- /content -->
-			
-		</div><!-- /page -->
-	
+        
+         
+      </div><!-- /content -->
+      
+    </div><!-- /page -->
+  
 
-	<script >
+  <script >
           
           document.getElementById("add").addEventListener("click", addDevice);
 
@@ -201,8 +201,8 @@
             var image=smallImage.src.replace('data:image/jpeg;base64,', '');
             alert(image);
            
-            var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=3&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid;
-               prompt('url',ajaxPageUrl);
+            var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=3&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid;
+               //prompt('url',ajaxPageUrl);
               $.ajax(ajaxPageUrl,{
                 async:true,
                 complete:addDeviceComplete
@@ -210,13 +210,13 @@
            }
         </script>
 
-			<script type="text/javascript" src="js/index.js"></script>
+      <script type="text/javascript" src="js/index.js"></script>
 
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-			<script type="text/javascript" src="cordova.js"></script>
-			<script type="text/javascript" src="scripts/platformOverrides.js"></script>
-			<script type="text/javascript" src="scripts/index.js"></script>
-			<script type="text/javascript" src="cordova.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script type="text/javascript" src="cordova.js"></script>
+      <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+      <script type="text/javascript" src="scripts/index.js"></script>
+      <script type="text/javascript" src="cordova.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
@@ -225,5 +225,5 @@
         <script src="js/nativedroid2.js"></script>
         <script src="nd2settings.js"></script>
 
-	</body>
+  </body>
 </html>

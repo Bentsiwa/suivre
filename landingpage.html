@@ -167,7 +167,7 @@
 		</script>
 		<script>
 		var newdeviceid="";
-		
+		var userid=localStorage.getItem("id");
 
 		 document.getElementById("tracking").addEventListener("click", starttracking);
 
@@ -178,6 +178,8 @@
 			function continueDelete(){
 			
 			}
+
+
 			function viewDevice(deviceid,name,description,tagidentification,locationid,image){
 		 
 
@@ -247,10 +249,10 @@
             }
 
               function getDevices(){
-              	var userid=localStorage.getItem("id");
+              	
               
 		
-		      var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=4&id="+userid;
+		      var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=4&id="+userid;
 		  		
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
@@ -259,6 +261,7 @@
 		   }
 
 			function getDevicesComplete(xhr,status){
+				var userid=localStorage.getItem("id");
 		        if(status!="success"){
 		          alert("Error during login");
 		          return;
@@ -278,12 +281,12 @@
 		              
 		              while(length>0){
 		              	if(length==1){
-		              		result+="<div class='row'><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img src='"+obj.device[length-1].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></a><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit  clr-teal'></i></button><a href='singledevicemap.html?placename="+obj.device[length-1].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div></div>";
+		              		result+="<div class='row'><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img src='"+obj.device[length-1].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></a><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit  clr-teal'></i></button><a href='singledevicemap.html?placename="+obj.device[length-1].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab' onclick='alertsecurity("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div></div>";
 		              	}
 		              	else{
 		              		
 
-		              	result+="<div class='row'><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img src='"+obj.device[length-1].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></button><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit clr-teal'></i></button></button><a href='singledevicemap.html?placename="+obj.device[length-2].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")'><div class='card-media'><img src='"+obj.device[length-2].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-2].name+"</h3></div></div></div><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit clr-teal'></i></button><a href='singledevicemap.html?placename="+obj.device[length-2].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div>";
+		              	result+="<div class='row'><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img src='"+obj.device[length-1].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></button><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit clr-teal'></i></button></button><a href='singledevicemap.html?placename="+obj.device[length-1].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab' onclick='alertsecurity("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div><div class='col-xs-6'><div class='box'><div class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")'><div class='card-media'><img src='"+obj.device[length-2].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-2].name+"</h3></div></div></div><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit clr-teal'></i></button><a href='singledevicemap.html?placename="+obj.device[length-2].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab' onclick='alertsecurity("+obj.device[length-2].deviceid+","+"&apos;"+obj.device[length-2].name+"&apos;"+","+"&apos;"+obj.device[length-2].description+"&apos;"+","+obj.device[length-2].tagidentification+","+obj.device[length-2].locationid+","+"&apos;"+obj.device[length-2].image+"&apos;"+")'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div>";
 		              }
 		                 
 		             
@@ -295,6 +298,38 @@
 		        }
 		      }
 		    }
+
+		     function alertsecurity(deviceid,name,description,tagidentification,locationid,image){
+		   		
+		   		var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=14&userid="+userid+"&deviceid="+deviceid+"&name="+name+"&description="+description+"&locationid="+locationid+"&image="+image;
+		  		prompt('url',ajaxPageUrl);
+		      $.ajax(ajaxPageUrl,{
+		        async:true,
+		        complete:alertComplete
+		      });
+		   		
+		   }
+
+
+            function alertComplete(xhr,status){
+                if(status!="success"){
+                  divStatus.innerHTML="error while adding user";
+                  return;
+                }
+                else{
+                  var obj=JSON.parse(xhr.responseText);
+                  if(obj.result==0){
+                    alert(obj.message);
+                  }
+                  else{
+                    // alert(obj.message);
+                   
+		        	alert("Security has been alerted");
+                 
+                 }
+                  
+              }
+            }
 		    
 
 		 

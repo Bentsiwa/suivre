@@ -80,7 +80,7 @@
 
 		</div>
 
-		<script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
+		
 		<script>
 		  // Initialize Firebase
 		  
@@ -168,8 +168,8 @@
 		    localStorage.setItem("email",email);
     		localStorage.setItem("password",password);
 
-		      var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=2&email="+email+"&password="+password;
-		 // prompt('url',ajaxPageUrl);
+		      var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=2&email="+email+"&password="+password;
+		  //prompt('url',ajaxPageUrl);
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:loginComplete

@@ -80,6 +80,17 @@
 			return $this->query($strQuery);
 
 		}
+		function getLocationWithID($location){
+			/**
+			*@var string $strQuery should contain insert query
+			*/
+			$strQuery="select placename from location where locationid=$location";
+
+							
+			return $this->query($strQuery);
+
+		}
+
 		
 		function getDevices($id=false){
 			$strQuery="select * from device";
@@ -92,11 +103,12 @@
 		}
 
 		function getDeviceLocation($filter=false){
-			$strQuery="select device.deviceid, device.name, device.image, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on location.locationid=devicelocation.locationid inner join device on devicelocation.deviceid=device.deviceid";
+			$strQuery="select device.deviceid, device.name, device.image, location.locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on location.locationid=devicelocation.locationid inner join device on devicelocation.deviceid=device.deviceid";
 
 			if($filter!=false){
                 $strQuery=$strQuery . " where device.deviceid='$filter'";
             }
+
 
             //$strQuery=$strQuery . "ORDER BY devicelocation.time DESC";
 
@@ -114,13 +126,13 @@
 			deviceid='$device',
 			locationid ='$location',
 			time='$currentdatetime'";
-							
+			//echo $strQuery;				
 			return $this->query($strQuery);
 		}
 
 
 		function findDevice($tag){
-				$strQuery="select deviceid from device where tagidentification='$tag'";
+				$strQuery="select device.deviceid as deviceid, device.name as name, device.description as description, user.phone as phone from device inner join user on device.userid=user.userid where tagidentification='$tag'";
 
 							
 			return $this->query($strQuery);
@@ -136,6 +148,17 @@
 			$strQuery="update device set
 			image='$image'
 			where deviceid=21";
+			return $this->query($strQuery);
+
+		}
+
+		function getUser($userid){
+					/**
+			*@var string $strQuery should contain insert query
+			*/
+			$strQuery="select * from user where userid=$userid";
+
+							
 			return $this->query($strQuery);
 
 		}

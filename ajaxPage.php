@@ -44,7 +44,7 @@ $cmd=$_REQUEST['cmd'];
 			getLocations();
 		break;
 		case 14:
-			test();
+			alertSecurity();
 		break;
 
 		default:
@@ -201,7 +201,7 @@ function addDevice(){
 		echo '{"result":0,"message":"Description is not given"}';
 		return;
 	}
-	
+
 	if(!isset($_REQUEST['tag'])){
 		echo '{"result":0,"message":"Tag ID is not given"}';
 		return;
@@ -209,7 +209,7 @@ function addDevice(){
 	// if(!isset($_REQUEST['image'])){
 	// 	echo '{"result":0,"message":"Image is not given"}';
 	// 	return;
-	}
+	
 	if($_REQUEST['device']==""){
 		echo '{"result":0,"message":"Device name is not given"}';
 		return;
@@ -538,8 +538,7 @@ function addDeviceLocation(){
 		echo '{"result":0,"message":"Location is not given"}';
 		return;
 	}
-	
-	
+
 	
 	$tag=$_REQUEST['tagid'];
 	$location=$_REQUEST['locationid'];
@@ -551,27 +550,79 @@ function addDeviceLocation(){
 		if($row==true){
 			$deviceid=$obj->fetch();
 
-		}
+			$row=$obj->getLocationWithID($location);
+			if($row==true){
+				$locationname=$obj->fetch();
 
+				$currentdatetime=date("Y-m-d h:i:s")." ";
+				$device=$deviceid['deviceid'];
+				
+			
+				$row=$obj->addDeviceLocation($device,$currentdatetime,	$location);
+
+
+				if($row==true){
+					echo '{"result":1,"message":"Device added"}';
+				}
+				else{
+					echo '{"result":0,"message":"Device not added"}';
+				}
+
+				
+				require './Smsgh/Api.php';
+
+				$auth = new BasicAuth("znlltiuf", "qmidxlrw");
+				// instance of ApiHost
+				$apiHost = new ApiHost($auth);
+
+				// instance of AccountApi
+				$accountApi = new AccountApi($apiHost);
+				// Get the account profile
+				// Let us try to send some message
+				$messagingApi = new MessagingApi($apiHost);
+				 try {
+			    // Send a quick message
+				    //$messageResponse = $messagingApi->sendQuickMessage("Husby", "+2332432191768", "I love you dearly Honey. See you in the evening...");
+				$currentdatetime=date("Y-m-d h:i:s")." ";
+				
+			
+
+				$mesg = new Message();
+				$mesg->setContent($deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime);
+				$mesg->setTo($deviceid['phone']);
+				$mesg->setFrom("Suivre App");
+				$mesg->setRegisteredDelivery(false);
+
+				   
+
+				$messageResponse = $messagingApi->sendMessage($mesg);
+
+				if ($messageResponse instanceof MessageResponse) {
+				    echo '{"result":1,"message":"Message sent"}';
+				      //   echo $messageResponse->getStatus();
+				      //   echo'"';
+				} elseif ($messageResponse instanceof HttpResponse) {
+				    echo '{"result":0,"message":"Message not sent"}';
+				}
+			} catch (Exception $ex) {
+				    echo $ex->getTraceAsString();
+			}
+
+		}
 		else{
+			echo '{"result":0,"message":"Could not fetch location information"}';
+			return;
+		}
+			
+
+	}
+
+	else{
 			echo '{"result":0,"message":"Could not fetch device information"}';
-		}
+			return;
+	}
 
-		$currentdatetime=date("Y-m-d h:i:s")." ";
-		$device=$deviceid['deviceid'];
-		
 	
-		$row=$obj->addDeviceLocation($device,$currentdatetime,$location);
-
-		
-		
-
-		if($row==true){
-			echo '{"result":1,"message":"Device added"}';
-		}
-		else{
-			echo '{"result":0,"message":"Device not added"}';
-		}
 	
 
 }
@@ -598,9 +649,128 @@ function getLocations(){
 	}
 }
 
-function test(){
-	// $image=$_REQUEST['img'];
-	// $row=$obj->updatingtest($image);
+function alertSecurity(){
+	if(!isset($_REQUEST['userid'])){
+		echo '{"result":0,"message":"User id is not given"}';
+		return;
+	}
+	if($_REQUEST['userid']==""){
+		echo '{"result":0,"message":"User id is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['deviceid'])){
+		echo '{"result":0,"message":"Device id is not given"}';
+		return;
+	}
+	if($_REQUEST['deviceid']==""){
+		echo '{"result":0,"message":"Device id is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['name'])){
+		echo '{"result":0,"message":"The name of device is not given"}';
+		return;
+	}
+	if($_REQUEST['name']==""){
+		echo '{"result":0,"message":"The name of device is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['description'])){
+		echo '{"result":0,"message":"Description is not given"}';
+		return;
+	}
+	if($_REQUEST['description']==""){
+		echo '{"result":0,"message":"Description is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['locationid'])){
+		echo '{"result":0,"message":"Location is not given"}';
+		return;
+	}
+	if($_REQUEST['locationid']==""){
+		echo '{"result":0,"message":"Location is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['image'])){
+		echo '{"result":0,"message":"Image is not given"}';
+		return;
+	}
+	if($_REQUEST['image']==""){
+		echo '{"result":0,"message":"Image is not given"}';
+		return;
+	}
+	
+	$name=$_REQUEST['name'];
+	$location=$_REQUEST['locationid'];
+	$description=$_REQUEST['description'];
+	$image=$_REQUEST['image'];
+	$deviceid=$_REQUEST['deviceid'];
+	$user=$_REQUEST['userid'];
+
+	include('user.php');
+	$obj=new user();
+
+	$row=$obj->getDeviceLocation($deviceid);
+	if($row==true){
+		$location=$obj->fetch();
+	}
+
+	else{
+		echo '{"result":0,"message":"Could not fetch location"}';
+		return;
+	}
+
+	$row=$obj->getUser($user);
+	if($row==true){
+		$user=$obj->fetch();
+	}
+
+	else{
+		echo '{"result":0,"message":"Could not fetch user"}';
+		return;
+	}
+
+	require './Smsgh/Api.php';
+
+	$auth = new BasicAuth("znlltiuf", "qmidxlrw");
+	// instance of ApiHost
+	$apiHost = new ApiHost($auth);
+
+	// instance of AccountApi
+	$accountApi = new AccountApi($apiHost);
+	// Get the account profile
+	// Let us try to send some message
+	$messagingApi = new MessagingApi($apiHost);
+	try {
+    // Send a quick message
+	    //$messageResponse = $messagingApi->sendQuickMessage("Husby", "+2332432191768", "I love you dearly Honey. See you in the evening...");
+		$currentdatetime=date("Y-m-d h:i:s")." ";
+		//echo($location['placename']);
+
+	    $mesg = new Message();
+	    $mesg->setContent("Alert from ".$user['firstname']." ".$user['lastname'].". ".$name." (".$description.") moved to the ".$location['placename']." at ".$currentdatetime);
+	    $mesg->setTo("+233573283028");
+	    $mesg->setFrom("Suivre App Security Alert!");
+	    $mesg->setRegisteredDelivery(false);
+
+	   
+
+	    $messageResponse = $messagingApi->sendMessage($mesg);
+
+	    if ($messageResponse instanceof MessageResponse) {
+	    	 echo '{"result":1,"message":"Message sent"}';
+	      //   echo $messageResponse->getStatus();
+	      //   echo'"';
+	    } elseif ($messageResponse instanceof HttpResponse) {
+	    	 echo '{"result":0,"message":"Message not sent"}';
+	        // echo "\nServer Response Status : " . $messageResponse->getStatus();
+	        // echo'"';
+	    }
+	} catch (Exception $ex) {
+	    echo $ex->getTraceAsString();
+	}
+
+	
+
 }
 
 function sendNotification(){

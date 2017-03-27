@@ -32,43 +32,43 @@ class databasehelper{
    
 
   
-   $this->db=new mysqli("localhost","efua.bainson","0c9bd4bc931f1e04","dbms_efua.bainson");
+   $this->db=new mysqli("localhost","id810289_efuabainson","efua.bainson","id810289_finalproject");
     //$this->db=new mysqli("localhost","root","","finalproject");
-  	if($this->db->connect_errno){
-  			return false;
-  	}
-  	return true;
-	}
-  	/**
-  	*Query the database
-  	*@param string $strQuery sql string to execute
-  	*/
+    if($this->db->connect_errno){
+        return false;
+    }
+    return true;
+  }
+    /**
+    *Query the database
+    *@param string $strQuery sql string to execute
+    */
   function query($strQuery){
-  	if(!$this->connect()){
-  			return false;
-  	}
+    if(!$this->connect()){
+        return false;
+    }
     if($this->db==null){
-  			return false;
-	  }
+        return false;
+    }
    $this->result=$this->db->query($strQuery);
    if($this->result==false){
-  		return false;
-	 }
+      return false;
+   }
    return true;
  }
-  	/**
-  	*Fetch from the current data set and return
-  	*@param string $strQuery sql string to execute
+    /**
+    *Fetch from the current data set and return
+    *@param string $strQuery sql string to execute
     *@return array one record
-  	*/
+    */
   function fetch(){
 
-	 if($this->result==null){
-  	return false;
+   if($this->result==null){
+    return false;
    }
 
-	if($this->result==false){
-  			return false;
+  if($this->result==false){
+        return false;
   }
 
   return $this->result->fetch_assoc();
