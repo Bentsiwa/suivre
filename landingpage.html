@@ -182,6 +182,7 @@
 
 			function viewDevice(deviceid,name,description,tagidentification,locationid,image){
 		 
+		   
 
 		   	window.location.href="devicepage.html?deviceid="+deviceid+"&name="+name+"&description="+description+"&tagidentification="+tagidentification+"&locationid="+locationid+"&image="+image;
 
@@ -302,7 +303,7 @@
 		     function alertsecurity(deviceid,name,description,tagidentification,locationid,image){
 		   		
 		   		var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=14&userid="+userid+"&deviceid="+deviceid+"&name="+name+"&description="+description+"&locationid="+locationid+"&image="+image;
-		  		prompt('url',ajaxPageUrl);
+		  	alert("Notification sent");
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:alertComplete

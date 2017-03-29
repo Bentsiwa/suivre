@@ -117,7 +117,7 @@
 		
 			<div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s"  data-inset="false">
 
-				<button onclick="" class="float">
+				<button onclick="alertsecurity()" class="float">
 					<i class="material-icons my-float" style="color:white;">error</i>
 				</button>
 				<div class="label-container">
@@ -195,30 +195,36 @@
 
 		</div>
 		<script>
+		var userid=localStorage.getItem("id");
+		var image;
+		var device;
+		var locationid;
 		var deviceid;
+		var description;
 		function getValues(){
 		
 		        var name=getQueryVariable("image");
-		        var image = name.replace("%20", " ");
+		        image = name.replace("%20", " ");
 		        
 
 		        var name=getQueryVariable("name");
-		        var device = name.replace("%20", " ");
+		        device = name.replace("%20", " ");
 		        
 		        
-		        var name=getQueryVariable("locationid");
-		        var location = name.replace("%20", " ");
+		      
 
 		        var name=getQueryVariable("deviceid");
 		        deviceid=name.replace("%20"," ");
 
+		        var name=getQueryVariable("description");
+		        description=name.replace("%20"," ");
 	
 
 		        deviceimg.innerHTML="<img src='"+image+"'>";
 		       	// locations.innerHTML=location;
 		       	devices.innerHTML=device;
 
-		       	var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=10&device="+deviceid;
+		       	var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=10&device="+deviceid;
 		  
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
@@ -247,6 +253,7 @@
                       
                         result+="<li ><div class='row' ><img src='"+obj.devicelocation[length-1].image+"' height='80' width='80' class='ui-thumbnail ui-thumbnail-circular col s4' /><div class='col s8'><h4><i class='zmdi zmdi-pin zmd-1x clr-red'></i>"+obj.devicelocation[length-1].placename+"</h4><p>"+obj.devicelocation[length-1].time+"</p></div></div></li>"; 
                         var location=obj.devicelocation[length-1].placename;
+                        locationid=obj.devicelocation[length-1].locationid;
                        length-=1;
                      }
                	
@@ -273,9 +280,7 @@
         }
 
 		   function deleteDevice(){
-		   	//window.location.href=editdevice.html";
-		   	// window.location.href="deletedevice.html?deviceid="+deviceid+"&name="+name+"&description="+description+"&tagidentification="+tagidentification+"&locationid="+locationid+"&image="+image;
-		   		// newdeviceid=deviceid;
+		   	
 		   		
 		   		var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=6&deviceid="+deviceid;
 		  		
@@ -314,6 +319,38 @@
                        },
                        ttl : 8000 // optional, time-to-live in ms (default: 3000)
                      });
+                 
+                 }
+                  
+              }
+            }
+           
+            function alertsecurity(){
+            	 var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=14&userid="+userid+"&deviceid="+deviceid+"&name="+device+"&description="+description+"&locationid="+locationid+"&image="+image;
+            	
+            		alert("Notification sent");
+		      $.ajax(ajaxPageUrl,{
+		        async:true,
+		        complete:alertComplete
+		      });
+		   		
+		   }
+
+
+            function alertComplete(xhr,status){
+                if(status!="success"){
+                  divStatus.innerHTML="error while adding user";
+                  return;
+                }
+                else{
+                  var obj=JSON.parse(xhr.responseText);
+                  if(obj.result==0){
+                    alert(obj.message);
+                  }
+                  else{
+                    // alert(obj.message);
+                   
+		        	alert("Security has been alerted");
                  
                  }
                   

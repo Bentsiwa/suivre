@@ -63,7 +63,7 @@
 			name='$device',
 			description ='$description',
 			tagidentification='$tag',
-			image='img/green.jpg',
+			image='img/device.jpg',
 			userid='$id'";
 							
 			return $this->query($strQuery);
@@ -90,6 +90,16 @@
 			return $this->query($strQuery);
 
 		}
+		function getLocationWithTagID($tagid){
+			/**
+			*@var string $strQuery should contain insert query
+			*/
+			$strQuery="select * from devicelocation where tagidentification=$tagid";
+
+							
+			return $this->query($strQuery);
+
+		}
 
 		
 		function getDevices($id=false){
@@ -103,7 +113,7 @@
 		}
 
 		function getDeviceLocation($filter=false){
-			$strQuery="select device.deviceid, device.name, device.image, location.locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on location.locationid=devicelocation.locationid inner join device on devicelocation.deviceid=device.deviceid";
+			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on location.locationid=devicelocation.locationid inner join device on devicelocation.deviceid=device.deviceid";
 
 			if($filter!=false){
                 $strQuery=$strQuery . " where device.deviceid='$filter'";
@@ -132,7 +142,7 @@
 
 
 		function findDevice($tag){
-				$strQuery="select device.deviceid as deviceid, device.name as name, device.description as description, user.phone as phone from device inner join user on device.userid=user.userid where tagidentification='$tag'";
+				$strQuery="select device.deviceid as deviceid, device.name as name, device.description as description, user.phone as phone, user.email as email from device inner join user on device.userid=user.userid where tagidentification='$tag'";
 
 							
 			return $this->query($strQuery);

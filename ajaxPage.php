@@ -613,7 +613,21 @@ function addDeviceLocation(){
 			echo '{"result":0,"message":"Could not fetch location information"}';
 			return;
 		}
-			
+
+
+	    	$to = $deviceid['email']; // this is your Email address
+		    $from = "efuabainson@gmail.com"; // this is the sender's Email address
+		    $subject = "Suivre App Alert";
+		    $subject2 = "Copy of Suivre App Alert";
+		    $message = $deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime;
+		    $message2 = $deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime;
+
+		    $headers = "From:" . $from;
+		    $headers2 = "From:" . $to;
+		    mail($to,$subject,$message,$headers);
+		    // mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
+		    
+						
 
 	}
 
@@ -712,6 +726,7 @@ function alertSecurity(){
 	$row=$obj->getDeviceLocation($deviceid);
 	if($row==true){
 		$location=$obj->fetch();
+
 	}
 
 	else{
@@ -748,9 +763,9 @@ function alertSecurity(){
 
 	    $mesg = new Message();
 	    $mesg->setContent("Alert from ".$user['firstname']." ".$user['lastname'].". ".$name." (".$description.") moved to the ".$location['placename']." at ".$currentdatetime);
-	    $mesg->setTo("+233573283028");
+	    $mesg->setTo("0573283028");
 	    $mesg->setFrom("Suivre App Security Alert!");
-	    $mesg->setRegisteredDelivery(false);
+	    $mesg->setRegisteredDelivery(true);
 
 	   
 
@@ -768,6 +783,17 @@ function alertSecurity(){
 	} catch (Exception $ex) {
 	    echo $ex->getTraceAsString();
 	}
+
+	    	$to = "efuabainson@gmail.com"; // this is your Email address
+		    $from = "efuabainson@gmail.com"; // this is the sender's Email address
+		    $subject = "Suivre App Security Alert!";
+		    $subject2 = "Copy of Suivre App Alert";
+		    $message = "Alert from ".$user['firstname']." ".$user['lastname'].". ".$name." (".$description.") moved to the ".$location['placename']." at ".$currentdatetime;
+		    $message2 = "Alert from ".$user['firstname']." ".$user['lastname'].". ".$name." (".$description.") moved to the ".$location['placename']." at ".$currentdatetime;
+
+		    $headers = "From:" . $from;
+		    $headers2 = "From:" . $to;
+		    mail($to,$subject,$message,$headers);
 
 	
 
