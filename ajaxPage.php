@@ -46,12 +46,77 @@ $cmd=$_REQUEST['cmd'];
 		case 14:
 			alertSecurity();
 		break;
+		case 15:
+			updateNotification();
+		break;
+		case 16:
+			addStartDeviceLocation();
+		break;
+		case 17:
+			addAdmin();
+		break;
+		case 18:
+			loginAdmin();
+		break;
+		case 19:
+			countLocationFrequency();
+		break;
+		case 20:
+			addReader();
+		break;
+		case 21:
+			getsAlerts();
+		break;
+		case 22:
+			getAllUsers();
+		break;
+
 
 		default:
 			echo '{"result":0,"message":"Wrong command"}';
 		break;
 	}
 }
+
+function addStartDeviceLocation(){
+	if(!isset($_REQUEST['deviceid'])){
+		echo '{"result":0,"message":"Device is not given"}';
+		return;
+	}
+	if($_REQUEST['deviceid']==""){
+		echo '{"result":0,"message":"Device is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['locationid'])){
+		echo '{"result":0,"message":"Location is not given"}';
+		return;
+	}
+	if($_REQUEST['locationid']==""){
+		echo '{"result":0,"message":"Location is not given"}';
+		return;
+	}
+
+	
+	$device=$_REQUEST['deviceid'];
+	$location=$_REQUEST['locationid'];
+
+	include('user.php');
+	$obj=new user();
+
+	$currentdatetime=date("Y-m-d h:i:s")." ";
+				
+			
+	$row=$obj->addDeviceLocation($device,$currentdatetime,	$location);
+	if($row==true){
+		echo '{"result":1,"message":"Device location successfully added"}';
+	}
+
+	else{
+		echo '{"result":0,"message":"Device location was not added"}';
+	}
+
+}
+
 function addUser(){
 	if(!isset($_REQUEST['firstname'])){
 		echo '{"result":0,"message":"First name is not given"}';
@@ -100,10 +165,11 @@ function addUser(){
 	$email=$_REQUEST['email'];
 	$password=$_REQUEST['password'];
 	$phone=$_REQUEST['phone'];
+	$notification=$_REQUEST['notification'];
 
 	include('user.php');
 	$obj=new user();
-	$row=$obj->addUser($firstname, $lastname, $email, $phone,$password);
+	$row=$obj->addUser($firstname, $lastname, $email, $phone,$password,$notification);
 
 	if($row==true){
 		echo '{"result":1,"message":"Sign up successful"}';
@@ -234,14 +300,30 @@ function addDevice(){
 	
 	$tag=$_REQUEST['tag'];
 	$userid=$_REQUEST['userid'];
-	$image=$_REQUEST['image'];
+	
+
+	if(is_array($_FILES)) {
+		if(is_uploaded_file($_FILES['userImage']['tmp_name'])) {
+			$sourcePath = $_FILES['userImage']['tmp_name'];
+				$targetPath = "img/".$_FILES['userImage']['name'];
+				if(move_uploaded_file($sourcePath,$targetPath)) {
+				
+					 $image= 'img/'.$_FILES['userImage']['name'];
+				
+			}
+		}
+		else{
+				$image='img/device.jpg';
+			}
+	}
+
 
 	
 	include('user.php');
 	$obj=new user();
 
 	
-		$row=$obj->addDevice($device,$description, $tag, $userid);
+		$row=$obj->addDevice($device,$description, $tag, $userid, $image);
 
 		if($row==true){
 			echo '{"result":1,"message":"Device added"}';
@@ -490,27 +572,23 @@ function getSingleDeviceLocationXML(){
 	 $place=$_REQUEST['place'];
 	
 		
-	header("Content-type: text/xml");
-	echo '<markers>';
+	// header("Content-type: text/xml");
+	// echo '<markers>';
 	include('user.php');
 	$obj=new user();
 	$row=$obj->getDeviceLocation($place);
 	if($row==true){
 		$row=$obj->fetch();
-			
+		echo '{"result":1,"devicelocation":[';
 			while($row){
-				
-				echo '<marker ';
-				  echo 'name="' . parseToXML($row['name']) . '" ';
-				  echo 'address="' . parseToXML($row['placename']) . '" ';
-				  echo 'lat="' . $row['latitude'] . '" ';
-				  echo 'lng="' . $row['longitude'] . '" ';
-				  echo 'type="' . $row['type'] . '" ';
-				  echo '/>';
-				  $row=$obj->fetch();
+				echo json_encode($row);
+
+				$row=$obj->fetch();
+				if($row!=false){
+					echo ",";
 				}
-				echo '</markers>';
-			
+			}
+		echo "]}";
 		
 
 	}
@@ -559,8 +637,6 @@ function addDeviceLocation(){
 				
 			
 				$row=$obj->addDeviceLocation($device,$currentdatetime,	$location);
-
-
 				if($row==true){
 					echo '{"result":1,"message":"Device added"}';
 				}
@@ -568,65 +644,82 @@ function addDeviceLocation(){
 					echo '{"result":0,"message":"Device not added"}';
 				}
 
-				
-				require './Smsgh/Api.php';
-
-				$auth = new BasicAuth("znlltiuf", "qmidxlrw");
-				// instance of ApiHost
-				$apiHost = new ApiHost($auth);
-
-				// instance of AccountApi
-				$accountApi = new AccountApi($apiHost);
-				// Get the account profile
-				// Let us try to send some message
-				$messagingApi = new MessagingApi($apiHost);
-				 try {
-			    // Send a quick message
-				    //$messageResponse = $messagingApi->sendQuickMessage("Husby", "+2332432191768", "I love you dearly Honey. See you in the evening...");
-				$currentdatetime=date("Y-m-d h:i:s")." ";
-				
-			
-
-				$mesg = new Message();
-				$mesg->setContent($deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime);
-				$mesg->setTo($deviceid['phone']);
-				$mesg->setFrom("Suivre App");
-				$mesg->setRegisteredDelivery(false);
-
-				   
-
-				$messageResponse = $messagingApi->sendMessage($mesg);
-
-				if ($messageResponse instanceof MessageResponse) {
-				    echo '{"result":1,"message":"Message sent"}';
-				      //   echo $messageResponse->getStatus();
-				      //   echo'"';
-				} elseif ($messageResponse instanceof HttpResponse) {
-				    echo '{"result":0,"message":"Message not sent"}';
-				}
-			} catch (Exception $ex) {
-				    echo $ex->getTraceAsString();
-			}
-
 		}
 		else{
 			echo '{"result":0,"message":"Could not fetch location information"}';
 			return;
 		}
 
+		if($deviceid['track']=='1'){
+			$notiicationcode=$deviceid['notification'];
+			
+			$pushnotification=substr($notiicationcode, 0,1);
+			$sms=substr($notiicationcode, 1,1);
+			$email=substr($notiicationcode, 2,1);
 
-	    	$to = $deviceid['email']; // this is your Email address
-		    $from = "efuabainson@gmail.com"; // this is the sender's Email address
-		    $subject = "Suivre App Alert";
-		    $subject2 = "Copy of Suivre App Alert";
-		    $message = $deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime;
-		    $message2 = $deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime;
+			
+			
 
-		    $headers = "From:" . $from;
-		    $headers2 = "From:" . $to;
-		    mail($to,$subject,$message,$headers);
-		    // mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
-		    
+			if($pushnotification=='1'){
+				
+			}
+			if($sms=='1'){
+				
+					require './Smsgh/Api.php';
+
+					$auth = new BasicAuth("znlltiuf", "qmidxlrw");
+					// instance of ApiHost
+					$apiHost = new ApiHost($auth);
+
+					// instance of AccountApi
+					$accountApi = new AccountApi($apiHost);
+					// Get the account profile
+					// Let us try to send some message
+					$messagingApi = new MessagingApi($apiHost);
+					 try {
+				    // Send a quick message
+					    //$messageResponse = $messagingApi->sendQuickMessage("Husby", "+2332432191768", "I love you dearly Honey. See you in the evening...");
+					$currentdatetime=date("Y-m-d h:i:s")." ";
+					
+				
+
+					$mesg = new Message();
+					$mesg->setContent($deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime);
+					$mesg->setTo($deviceid['phone']);
+					$mesg->setFrom("Suivre App");
+					$mesg->setRegisteredDelivery(false);
+
+					   
+
+					$messageResponse = $messagingApi->sendMessage($mesg);
+
+					if ($messageResponse instanceof MessageResponse) {
+					    echo '{"result":1,"message":"Message sent"}';
+					      //   echo $messageResponse->getStatus();
+					      //   echo'"';
+					} elseif ($messageResponse instanceof HttpResponse) {
+					    echo '{"result":0,"message":"Message not sent"}';
+					}
+				} catch (Exception $ex) {
+					    echo $ex->getTraceAsString();
+				}
+			}
+			if($email=='1'){
+				
+
+		    	$to = $deviceid['email']; // this is your Email address
+			    $from = "efuabainson@gmail.com"; // this is the sender's Email address
+			    $subject = "Suivre App Alert";
+			    $subject2 = "Copy of Suivre App Alert";
+			    $message = $deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime;
+			    $message2 = $deviceid['name']." moved to the ".$locationname['placename']." at ".$currentdatetime;
+
+			    $headers = "From:" . $from;
+			    $headers2 = "From:" . $to;
+			    mail($to,$subject,$message,$headers); 
+			}
+
+		}
 						
 
 	}
@@ -720,6 +813,9 @@ function alertSecurity(){
 	$deviceid=$_REQUEST['deviceid'];
 	$user=$_REQUEST['userid'];
 
+	$alertlocation=$location;
+	$alertuser=$user;
+
 	include('user.php');
 	$obj=new user();
 
@@ -796,51 +892,293 @@ function alertSecurity(){
 		    mail($to,$subject,$message,$headers);
 
 	
+	$row=$obj->addAlert($alertuser, $deviceid, $location['locationid'], $currentdatetime);
+	if($row==true){
+		echo '{"result":1,"message":"Alert added"}';
+	}
+
+	else{
+		echo '{"result":0,"message":"Alert not added to database"}';
+		return;
+	}
+}
+
+
+function updateNotification(){
+	include('user.php');
+	$obj=new user();
+
+	if(isset($_REQUEST['notification'])){
+		if(!($_REQUEST['notification']=="")){
+			$notification=$_REQUEST['notification'];
+			$userid=$_REQUEST['userid'];
+			$row=$obj->updateNotificationCode($notification, $userid);
+			if($row==true){
+				
+			}
+
+			else{
+				echo '{"result":0,"message":"Could not update notification channel"}';
+				return;
+			}
+		}
+	}
+
+	$track=$_REQUEST['track'];
+	$device=$_REQUEST['devicename'];
+
+	$currentdatetime=date("Y-m-d h:i:s")." ";
+
+	$row=$obj->updateTrackingCode($track, $device, $currentdatetime);
+	if($row==true){
+		echo '{"result":1,"message":"Update successful"}';
+	}
+
+	else{
+		echo '{"result":0,"message":"Update failed"}';
+		return;
+	}
+
 
 }
 
-function sendNotification(){
-	$to="APA91bFIj2WLkD3W4kbZcGO7dyI-TKKX0QpYCwtzqE2cNC0GbnUfQ7_gvQKOUloSb9T-6OZMxKdHXj8biiMYVgRJJP-C6b3PfpC7Kzu4G77PqMeGekHU9W6qTwnu0YTtWGNd6tGMBQka";
-	$title="Push Notification Title";
-	$message="Push Notification Message";
-	sendPush($to,$title,$message);
+function addReader(){
+	if(!isset($_REQUEST['place'])){
+		echo '{"result":0,"message":"Place is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['lat'])){
+		echo '{"result":0,"message":"Latitude is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['lng'])){
+		echo '{"result":0,"message":"Longitude is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['type'])){
+		echo '{"result":0,"message":"Type is not given"}';
+		return;
+	}
+
+
+
+	if($_REQUEST['place']==""){
+		echo '{"result":0,"message":"Place is not given"}';
+		return;
+	}
+	if($_REQUEST['lat']==""){
+		echo '{"result":0,"message":"Latitude is not given"}';
+		return;
+	}
+	if($_REQUEST['lng']==""){
+		echo '{"result":0,"message":"Longitude is not given"}';
+		return;
+	}
+	if($_REQUEST['type']==""){
+		echo '{"result":0,"message":"Type is not given"}';
+		return;
+	}
+
+
+
+	$place=$_REQUEST['place'];
+	$lat=$_REQUEST['lat'];
+	$lng=$_REQUEST['lng'];
+	$type=$_REQUEST['type'];
+	
+
+	include('user.php');
+	$obj=new user();
+	$row=$obj->addReader($place, $lat, $lng, $type);
+
+	if($row==true){
+		echo '{"result":1,"message":"Reader added"}';
+	}
+
+	else{
+		echo '{"result":0,"message":"Reader not added"}';
+	}
+
 }
 
-function sendPush($to,$title,$message)
-{
-// API access key from Google API's Console
-// replace API
-	define( 'API_ACCESS_KEY', 'AIzaSyA5eScgNYWfnCjtmP7e22aYos4Zdn7h_kE');
-	$registrationIds = array($to);
-	$msg = array
-	(
-	'message' => $message,
-	'title' => $title,
-	'vibrate' => 1,
-	'sound' => 1
+function addAdmin(){
+	if(!isset($_REQUEST['orgname'])){
+		echo '{"result":0,"message":"Organization name is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['orgemail'])){
+		echo '{"result":0,"message":"Organization email is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['semail'])){
+		echo '{"result":0,"message":"Security email is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['orgnum'])){
+		echo '{"result":0,"message":"Organization phone number is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['password'])){
+		echo '{"result":0,"message":"Password is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['snum'])){
+		echo '{"result":0,"message":"Security phone number is not given"}';
+		return;
+	}
 
-	// you can also add images, additionalData
-	);
-	$fields = array
-	(
-	'registration_ids' => $registrationIds,
-	'data' => $msg
-	);
-	$headers = array
-	(
-	'Authorization: key=' . API_ACCESS_KEY,
-	'Content-Type: application/json'
-	);
-	$ch = curl_init();
-	curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
-	curl_setopt( $ch,CURLOPT_POST, true );
-	curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
-	curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-	curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-	curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
-	$result = curl_exec($ch );
-	curl_close( $ch );
-	echo $result;
+
+	if($_REQUEST['orgname']==""){
+		echo '{"result":0,"message":"Organization nameis not given"}';
+		return;
+	}
+	if($_REQUEST['orgemail']==""){
+		echo '{"result":0,"message":"Organization email is not given"}';
+		return;
+	}
+	if($_REQUEST['semail']==""){
+		echo '{"result":0,"message":"Security email is not given"}';
+		return;
+	}
+	if($_REQUEST['orgnum']==""){
+		echo '{"result":0,"message":"Organization phone number is not given"}';
+		return;
+	}
+	if($_REQUEST['password']==""){
+		echo '{"result":0,"message":"Password is not given"}';
+		return;
+	}
+	if($_REQUEST['snum']==""){
+		echo '{"result":0,"message":"Security phone number is not given"}';
+		return;
+	}
+
+
+	$orgname=$_REQUEST['orgname'];
+	$orgemail=$_REQUEST['orgemail'];
+	$semail=$_REQUEST['semail'];
+	$orgnum=$_REQUEST['orgnum'];
+	$password=$_REQUEST['password'];
+	$snum=$_REQUEST['snum'];
+
+	include('user.php');
+	$obj=new user();
+	$row=$obj->addAmin($orgname, $orgemail, $semail, $orgnum,$password,$snum);
+
+	if($row==true){
+		echo '{"result":1,"message":"Sign up successful"}';
+	}
+
+	else{
+		echo '{"result":0,"message":"Sign up was not successful"}';
+	}
+
+}
+
+function loginAdmin(){
+
+	if(!isset($_REQUEST['email'])){
+		echo '{"result":0,"message":"Email is not given"}';
+		return;
+	}
+	if(!isset($_REQUEST['password'])){
+		echo '{"result":0,"message":"Password is not given"}';
+		return;
+	}
+	if($_REQUEST['email']==""){
+		echo '{"result":0,"message":"Email is not given"}';
+		return;
+	}
+	if($_REQUEST['password']==""){
+		echo '{"result":0,"message":"Password is not given"}';
+		return;
+	}
+	$email=$_REQUEST['email'];
+	$password=$_REQUEST['password'];
+	include('user.php');
+	$obj=new user();
+	$row=$obj->adminlogin($email, $password);
+	if($row==true){
+		$row=$obj->fetch();
+		echo '{"result":1,"user":';
+		echo json_encode($row);
+		echo "}";
+	}
+
+	else{
+		echo '{"result":0,"message":"Login failed"}';
+	}
+}
+
+function countLocationFrequency(){
+	include('user.php');
+	$obj=new user();
+	$row=$obj->countLocationFrequency();
+	if($row==true){
+		$row=$obj->fetch();
+		echo '{"result":1,"location":[';
+			while($row){
+				echo json_encode($row);
+
+				$row=$obj->fetch();
+				if($row!=false){
+					echo ",";
+				}
+			}
+		echo "]}";
+	}
+
+	else{
+		echo '{"result":0,"message":"Could not fetch locations"}';
+	}
+
+}
+
+function getsAlerts(){
+	include('user.php');
+	$obj=new user();
+	$row=$obj->getAlerts();
+	if($row==true){
+		$row=$obj->fetch();
+		echo '{"result":1,"location":[';
+			while($row){
+				echo json_encode($row);
+
+				$row=$obj->fetch();
+				if($row!=false){
+					echo ",";
+				}
+			}
+		echo "]}";
+	}
+
+	else{
+		echo '{"result":0,"message":"Could not fetch alerts"}';
+	}
+
+}
+function getAllUsers(){
+
+	include('user.php');
+	$obj=new user();
+	$row=$obj->getAllUsers();
+	if($row==true){
+		$row=$obj->fetch();
+		echo '{"result":1,"users":[';
+			while($row){
+				echo json_encode($row);
+
+				$row=$obj->fetch();
+				if($row!=false){
+					echo ",";
+				}
+			}
+		echo "]}";
+	}
+
+	else{
+		echo '{"result":0,"message":"Could not fetch users"}';
+	}
 }
 
 ?>

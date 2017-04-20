@@ -116,14 +116,7 @@
 			</div>
 		
 			<div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s"  data-inset="false">
-
-				<button onclick="alertsecurity()" class="float">
-					<i class="material-icons my-float" style="color:white;">error</i>
-				</button>
-				<div class="label-container">
-				<div class="label-text"></div>
-				
-				
+						
 				</div>
 				
 			
@@ -201,20 +194,25 @@
 		var locationid;
 		var deviceid;
 		var description;
+
 		function getValues(){
-		
+			
 		        var name=getQueryVariable("image");
 		        image = name.replace("%20", " ");
 		        
 
 		        var name=getQueryVariable("name");
 		        device = name.replace("%20", " ");
-		        
-		        
-		      
+		  
+
 
 		        var name=getQueryVariable("deviceid");
 		        deviceid=name.replace("%20"," ");
+		    
+
+		        var name=getQueryVariable("locationid");
+		        var location = name.replace("%20", " ");
+		 
 
 		        var name=getQueryVariable("description");
 		        description=name.replace("%20"," ");
@@ -282,7 +280,7 @@
 		   function deleteDevice(){
 		   	
 		   		
-		   		var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=6&deviceid="+deviceid;
+		   	  var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=6&deviceid="+deviceid;
 		  		
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
@@ -356,18 +354,16 @@
                   
               }
             }
-
-
 		</script>
 
 		
-			<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
 
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-			<script type="text/javascript" src="cordova.js"></script>
-			<script type="text/javascript" src="scripts/platformOverrides.js"></script>
-			<script type="text/javascript" src="scripts/index.js"></script>
-			<script type="text/javascript" src="cordova.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="scripts/platformOverrides.js"></script>
+		<script type="text/javascript" src="scripts/index.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>

@@ -141,8 +141,8 @@
             var tag = document.getElementById("tag").value;
             var userid=localStorage.getItem("id");
            
-            var ajaxPageUrl="http://35.166.18.143/~efua.bainson/suivre/ajaxPage.php?cmd=5&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid+"&deviceid="+deviceid;
-              // prompt('url',ajaxPageUrl);
+            var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=5&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid+"&deviceid="+deviceid;
+          
               $.ajax(ajaxPageUrl,{
                 async:true,
                 complete:editDeviceComplete
@@ -153,7 +153,7 @@
 
             function editDeviceComplete(xhr,status){
                 if(status!="success"){
-                  divStatus.innerHTML="error while adding user";
+                  alert("error while editing user");
                   return;
                 }
                 else{

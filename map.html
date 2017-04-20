@@ -83,10 +83,15 @@
                 var infoWindow = new google.maps.InfoWindow;
                 //var place=getQueryVariable("placename");
                    var ajaxPageUrl='http://suivre.000webhostapp.com/ajaxPage.php?cmd=7';
-                  // Change this depending on the name of your PHhttp://localhost/suivre/devicepage.html?image=img/phone.jpg&device=Sumsumg%20NEW%20phone&location=undefinedP or XML file
+               
+                  var counter=0;
+                  var listarray=[];
+                 
+                  
                   downloadUrl(ajaxPageUrl, function(data) {
                     var xml = data.responseXML;
                     var markers = xml.documentElement.getElementsByTagName('marker');
+
                     Array.prototype.forEach.call(markers, function(markerElem) {
                       var name = markerElem.getAttribute('name');
                       var address = markerElem.getAttribute('address');
@@ -94,7 +99,12 @@
                       var point = new google.maps.LatLng(
                           parseFloat(markerElem.getAttribute('lat')),
                           parseFloat(markerElem.getAttribute('lng')));
+                     if(listarray.includes(name)){
 
+                     }
+                     else{
+                      listarray[counter]=name;
+                      counter++;
                       var infowincontent = document.createElement('div');
                       var strong = document.createElement('strong');
                       strong.textContent = name
@@ -113,19 +123,16 @@
                         animation: google.maps.Animation.BOUNCE,
                         
                       });
+                      
+
                       marker.addListener('click', function() {
                         infoWindow.setContent(infowincontent);
                         infoWindow.open(map, marker);
                       });
-
-
-          //infowindow.open(map,marker);
-
-            });
+                  }
+           });
           });
         }
-
-
 
       function downloadUrl(url, callback) {
         var request = window.ActiveXObject ?
@@ -146,9 +153,6 @@
       function doNothing() {}
 
             </script>
-
-
-
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTkY7wBvoCOudVkNhgfH7Gp-a9FEYckNY&callback=myMap"></script>
 
 

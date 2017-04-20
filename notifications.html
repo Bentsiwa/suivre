@@ -101,6 +101,7 @@
                   else{
                      var result="";
                       var length=obj.devicelocation.length;
+                      counter=0;
                     //   var dt = new Date();
                     //  var thetime=dt.toUTCString();
                     //  alert(thetime);
@@ -113,10 +114,10 @@
                     // var diffDays = thetime.getDate() - d.getDate(); 
                     // alert(diffDays);
                                        
-                      while(length>0){
+                      while(counter<length){
                       
-                        result+="<br><li ><div class='row' ><img src='"+obj.devicelocation[length-1].image+"' height='80' width='80' class='ui-thumbnail ui-thumbnail-circular col s4' /><div class='col s8'><h2><i class='nd2-subhead'></i>"+obj.devicelocation[length-1].name+"</h2><h4><i class='zmdi zmdi-pin zmd-1x clr-red'></i>"+obj.devicelocation[length-1].placename+"</h4><p>"+obj.devicelocation[length-1].time+"</p></div></div></li>"; 
-                       length-=1;
+                        result+="<br><li ><div class='row' ><img src='"+obj.devicelocation[counter].image+"' height='80' width='80' class='ui-thumbnail ui-thumbnail-circular col s4' /><div class='col s8'><h2><i class='nd2-subhead'></i>"+obj.devicelocation[counter].name+"</h2><h4><i class='zmdi zmdi-pin zmd-1x clr-red'></i>"+obj.devicelocation[counter].placename+"</h4><p>"+obj.devicelocation[counter].time+"</p></div></div></li>"; 
+                       counter++;
                      }
                
              

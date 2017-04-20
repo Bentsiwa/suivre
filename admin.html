@@ -26,72 +26,47 @@
               }
          </script>
         <script >
-        //dsf
-		// 	document.addEventListener("deviceready",onDeviceReady,false);
-		// 	function onDeviceReady(){
-		// 		alert("here");
-		// 		 var push = PushNotification.init({ "android": {"senderID": "81511517930"}});
-		// 		 push.on('registration', function(data) {
-		// 		 console.log(data.registrationId);
-		// 		 alert(data.registrationId);
-		// 		 document.getElementById("gcm_id").innerHTML = data.registrationId;
-		// 		 });
+       </script>
 
-		// 		 push.on('notification', function(data) {
-		// 		 alert(data.title+" Message: " +data.message);
-		// 		 });
 
-		// 		 push.on('error', function(e) {
-		// 		 alert(e);
-		// 		 });
-		// 	}
-		// </script>
-
-     
 
 	</head>
-	<body background="img/bg.png">
+	<body >
 
-		<div data-role="page" style="background:url('img/bg.png')"><br><br><br><br><br><br>
+		<div data-role="page" style="background: #2b5876;  /* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+			"><br><br><br><br><br><br>
 			<center><i class='zmdi zmdi-search-in-page zmd-4x clr-white'></i>
 			<h4 class="clr-white">Suivre</h4></center><br><br>
-			
-				
 			<div class="row">
 				<div class="col-xs-1 col-sm-3 col-md-4">
 				</div>
 				<div class="col-xs-10 col-sm-6 col-md-4">
 			
-				<form name="loginform">
+				<form>
 
 				
 				<div class="box">
 
-					<!-- <label style="color:white" for="name2b"><i class='zmdi zmdi-account zmd-1x'></i><strong>Username</strong></label> -->
-	                <input style=" color:black;" name="email" type="text" name="email" id="email" data-clear-btn="true" placeholder=" Email">
+	                <input style="color:black;" type="text" name="email" id="email" data-clear-btn="true" placeholder=" Organization Email">
 
-				<!-- 	<label style="color:white" for="inputDate"><i class='zmdi zmdi-key zmd-1x'></i><strong>Password</strong></label> -->
 	                <input type="password" name="password" id="password"  data-clear-btn="true" placeholder=" Password">
-	                <button style="background-color:#00b3b3; color:white;" id="login" class="ui-btn">Login</button>
+	                <button style="background-color:#5B86E5; color:white;" id="login" class="ui-btn">Login</button>
                  </div>
                  <br>
-                 <h6 class="clr-white" >Don't have an account? <a href="" class="clr-white" id="register"><b class="clr-white">Sign up</b></a></h6>
+                 <center><h6 class="clr-white" >Don't have an account? <a href="" class="clr-white" id="register"><b class="clr-white">Sign up</b></a></h6></center>
 
-           
          </form>
-     </div>
- </div>
-           
+         </div>
+
+             </div>
+       
 
 
 		</div>
 
-		
-		<script>
-		  
-
-
-		</script>
+	
 		<script >
 		  
 		  document.getElementById("login").addEventListener("click", login);
@@ -112,17 +87,17 @@
 		          else{
 		             if(obj.user==null){
 		              alert("You haven't signed up yet");
-		              window.location.href="index.html";
+		              window.location.href="http://suivre.000webhostapp.com/admin.html";
 		            }else{
 		          
 		            // var firstname=obj.user.firstname;
 		            // var lastname=obj.user.lastname;
 		            
-		            localStorage.setItem("firstname",obj.user.firstname);
-    				localStorage.setItem("lastname",obj.user.lastname);
-    				localStorage.setItem("id",obj.user.userid);
+		            localStorage.setItem("name",obj.user.orgname);
+    				localStorage.setItem("num",obj.user.orgnum);
+    				localStorage.setItem("id",obj.user.adminid);
     				
-		          	window.location.href="landingpage.html";
+		          	window.location.href="http://suivre.000webhostapp.com/adminlandingpage.html";
 		        }
 		        }
 		      }
@@ -136,15 +111,15 @@
 		    localStorage.setItem("email",email);
     		localStorage.setItem("password",password);
 
-		      var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=2&email="+email+"&password="+password;
-		
+		      var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=18&email="+email+"&password="+password;
+		 
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:loginComplete
 		      });
 		   }
 		   function register(){
-		   		window.location.href="register.html";
+		   		window.location.href="http://suivre.000webhostapp.com/adminregister.html";
 		   }
 		</script>
 		<script type="text/javascript" src="js/index.js"></script>

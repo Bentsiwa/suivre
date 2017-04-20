@@ -63,30 +63,30 @@
                         <div class="box">
 
                          <label for="device" id="devicelist" class="select">Device</label>
-                        <!-- <select  id="devicelist" data-native-menu="false">
-                            <option value="javascript">JavaScript</option>
-                            <option value="css">CSS</option>
-                            <option value="html">HTML</option>
-                            <option value="csharp">C#</option>
-                            <option value="java">Java</option>
-
-
-                        </select> -->
+              
                         <br>
 
                         
                          <label for="location" id="locationlist" class="select">Current Location</label>
-                      <!--   <select name="select-choice-1" id="location" data-native-menu="false">
-                            <option value="javascript">JavaScript</option>
-                            <option value="css">CSS</option>
-                            <option value="html">HTML</option>
-                            <option value="csharp">C#</option>
-                            <option value="java">Java</option>
-                        </select> -->
+                         <br>
+                        <fieldset data-role="controlgroup">
+                            <legend >Change notification channel</legend>
+                            
+                            <input checked="" class="messageCheckbox2" type="checkbox" name="sms" id="checkbox-2ab">
+                            <label for="checkbox-2ab">SMS</label>
+                            <input class="messageCheckbox3" type="checkbox" name="email" id="checkbox-3ab">
+                            <label for="checkbox-3ab">Email</label>
+                            
+                    </fieldset>
+                        <br>
+                     
                         <br><br>
 
+                        <div id="trackbtn">
+                          <button id="track" class="ui-btn ui-btn-raised clr-primary">Start Tracking</button>
+                        </div>
                         
-                        <button id="track" class="ui-btn ui-btn-raised clr-primary">Track</button>
+                        
                       
                     </div>
                
@@ -103,7 +103,41 @@
   
 
   <script >
- // document.getElementById("track").addEventListener("click", getDevices);
+  document.getElementById("track").addEventListener("click", starttracking);
+     var device;
+     var locationid;
+     var deviceid;
+
+     function valuechangelocation(){
+         var selectedresult = document.getElementById("location").value;
+          var str = selectedresult;
+          var res = str.replace(" ", "%20");
+  
+         locationid=localStorage.getItem(res);
+       
+         
+
+     }
+    
+
+      function valuechange(){
+
+         var selectedresult = document.getElementById("device").value;
+        
+          var notification=localStorage.getItem(selectedresult);
+
+          
+          if(notification[0]=='1'){
+            trackbtn.innerHTML='<button onclick="stoptracking()"class="ui-btn ui-btn-raised clr-primary"> Stop Tracking</button>';
+         
+             
+          }else{
+             trackbtn.innerHTML='<button onclick="starttracking()" class="ui-btn ui-btn-raised clr-primary">Start Tracking</button>';
+          }
+          
+
+      }
+     
           
       function getDevices(){
     
@@ -131,10 +165,17 @@
                   var length=obj.device.length;
 
                 
-                  var data = '<label for="device" class="select">Device</label><select name="select-choice-1" id="device" data-native-menu="false">';
+                  var data = '<label for="device" class="select">Device</label><select name="select-choice-1" id="device" onchange="valuechange()" data-native-menu="false">';
                   while(length>0){
-                    data+="<option value='device'>"+obj.device[length-1].name+"</option>";
-                   
+                    var str = obj.device[length-1].name;
+                    var res = str.replace(" ", "%20");
+                    data+="<option value="+res+">"+obj.device[length-1].name+"</option>";
+                    
+                    var devicearray=new Array(obj.device[length-1].track ,obj.device[length-1].deviceid);
+                  
+                    
+                    localStorage.setItem(res, devicearray);
+
                  
                    length-=1;
                  }
@@ -153,7 +194,7 @@
         function getLocations(){
     
           var ajaxPageUrl="https://suivre.000webhostapp.com/ajaxPage.php?cmd=13";
-          //prompt('url',ajaxPageUrl);
+          
           $.ajax(ajaxPageUrl,{
             async:true,
             complete:getLocationsComplete
@@ -162,7 +203,7 @@
 
       function getLocationsComplete(xhr,status){
             if(status!="success"){
-              alert("Error during login");
+              alert("Error getting locations");
               return;
             }
             else{
@@ -175,9 +216,15 @@
                    var length=obj.location.length;
                   
                 
-                  var data = '<label for="location" class="select">Current Location</label><select name="select-choice-1" id="location" data-native-menu="false">';
+                  var data = '<label for="location" class="select">Current Location</label><select name="select-choice-1" id="location" onchange="valuechangelocation()" data-native-menu="false">';
                   while(length>0){
-                    data+="<option value='device'>"+obj.location[length-1].placename+"</option>";
+
+                    var str = obj.location[length-1].placename;
+                    var res = str.replace(" ", "%20");
+
+                    data+="<option value="+res+" >"+obj.location[length-1].placename+"</option>";
+                  
+                    localStorage.setItem(res, obj.location[length-1].locationid);
                    
                  
                    length-=1;
@@ -190,6 +237,139 @@
             }
           }
         }
+
+
+        function starttracking(){
+      
+          var checkedsms = $('.messageCheckbox2:checked').val();
+          var checkedemail = $('.messageCheckbox3:checked').val();
+
+          var deviceSelect = document.getElementById("device");
+          device = deviceSelect.options[deviceSelect.selectedIndex].text;
+
+          var locationSelect = document.getElementById("location");
+          var location = locationSelect.options[locationSelect.selectedIndex].text;
+
+          var result;
+          
+         
+            result="0";
+          
+          if(checkedsms=="on"){
+            result=result+"1";
+            
+          }
+          else{
+            result=result+"0";
+          }
+          if(checkedemail=="on"){
+            result=result+"1";
+            
+          }
+          else{
+            result=result+"0";
+          }
+        
+          var userid=localStorage.getItem("id");
+          var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=15&notification="+result+"&track=1&userid="+userid+"&devicename="+device;
+     
+         $.ajax(ajaxPageUrl,{
+            async:true,
+            complete:starttrackingComplete
+          });
+
+       }
+
+      function starttrackingComplete(xhr,status){
+            if(status!="success"){
+              alert("Error during login");
+              return;
+            }
+            else{
+              var obj=JSON.parse(xhr.responseText);
+             
+              if(obj.result==0){
+                alert(obj.message);
+              }
+              else{
+                 alert("Tracking "+device);
+  
+                  var res = device.replace(" ", "%20");
+                  var notification=localStorage.getItem(res);
+                  var value = notification.split(",");
+                   deviceid=value[1];
+                 
+                  var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=16&deviceid="+value[1]+"&locationid="+locationid;
+                 
+                  $.ajax(ajaxPageUrl,{
+                    async:true,
+                    complete:starttrackingCompletely
+                  });
+
+ 
+                 
+  
+            }
+          }
+        }
+        function starttrackingCompletely(xhr,status){
+            if(status!="success"){
+              alert("Error during login");
+              return;
+            }
+            else{
+              var obj=JSON.parse(xhr.responseText);
+             
+              if(obj.result==0){
+                alert(obj.message);
+              }
+              else{
+                
+
+                 window.location.href='singledevicemap.html?placename='+deviceid;
+                 
+  
+            }
+          }
+        }
+
+        function stoptracking(){
+          var deviceSelect = document.getElementById("device");
+          device = deviceSelect.options[deviceSelect.selectedIndex].text;
+
+          var locationSelect = document.getElementById("location");
+          var location = locationSelect.options[locationSelect.selectedIndex].text;
+        
+          var userid=localStorage.getItem("id");
+          var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=15&track=0&userid="+userid+"&devicename="+device;
+     
+         $.ajax(ajaxPageUrl,{
+            async:true,
+            complete:stoptrackingComplete
+          });
+
+       }
+
+      function stoptrackingComplete(xhr,status){
+            if(status!="success"){
+              alert("Error during login");
+              return;
+            }
+            else{
+              var obj=JSON.parse(xhr.responseText);
+             
+              if(obj.result==0){
+                alert(obj.message);
+              }
+              else{
+                 alert("Tracking of "+device+" ended");
+                 window.location.href="starttracking.html";
+                 
+  
+            }
+          }
+        }
+
         </script>
 
     

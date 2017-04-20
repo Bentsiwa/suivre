@@ -14,6 +14,9 @@
         <link rel="stylesheet" href="vendor/waves/waves.min.css" />
         <link rel="stylesheet" href="vendor/wow/animate.css" />
         <link rel="stylesheet" href="css/nativedroid2.css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
 
       
 
@@ -68,61 +71,197 @@
                 }
               };
 
-            function fillForm(){
 
+          function myMap(){
+            place=getQueryVariable("placename");
+
+            var ajaxPageUrl='http://suivre.000webhostapp.com/ajaxPage.php?cmd=8&place='+place;
+       
+          
+             $.ajax(ajaxPageUrl,{
+            async:true,
+            complete:myMapComplete
+          });
           }
 
+          function myMapComplete(xhr,status){
+            if(status!="success"){
+              alert("Error during fetching data");
+              return;
+            }
+            else{
+              var obj=JSON.parse(xhr.responseText);
+             
+              if(obj.result==0){
+                alert(obj.message);
+              }
+              else{
+                 var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+                    center: {lat: 5.7596123, lng: -0.2194058}
+                  });
+                 var infoWindow = new google.maps.InfoWindow;
+                    var result = [];
+                    for (var i=0; i<obj.devicelocation.length; i++) {
+                        result[i] = new google.maps.LatLng(obj.devicelocation[i].latitude, obj.devicelocation[i].longitude);
+                        if(i==0){
+                              var infowincontent = document.createElement('div');
+                              var strong = document.createElement('strong');
+                              strong.textContent = obj.devicelocation[i].name
+                              infowincontent.appendChild(strong);
+                         
+                              infowincontent.appendChild(document.createElement('br'));
 
-            function myMap() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                  center: new google.maps.LatLng(5.7596123,-0.2194058),
-                  zoom: 16
-                });
-              
-                  place=getQueryVariable("placename");
-                var infoWindow = new google.maps.InfoWindow;
-                
-                   var ajaxPageUrl='http://suivre.000webhostapp.com/ajaxPage.php?cmd=8&place='+place;
-                                    // Change this depending on the name of your PHP or XML file
-                  downloadUrl(ajaxPageUrl, function(data) {
-                    var xml = data.responseXML;
-                    var markers = xml.documentElement.getElementsByTagName('marker');
-                    Array.prototype.forEach.call(markers, function(markerElem) {
-                      var name = markerElem.getAttribute('name');
-                      var address = markerElem.getAttribute('address');
-                      var type = markerElem.getAttribute('type');
-                      var point = new google.maps.LatLng(
-                          parseFloat(markerElem.getAttribute('lat')),
-                          parseFloat(markerElem.getAttribute('lng')));
 
-                      var infowincontent = document.createElement('div');
-                      var strong = document.createElement('strong');
-                      strong.textContent = name
-                      infowincontent.appendChild(strong);
-                 
-                      infowincontent.appendChild(document.createElement('br'));
 
-                      var text = document.createElement('text');
-                      text.textContent = address
-                      infowincontent.appendChild(text);
-                      var icon = customLabel[type] || {};
-                      var marker = new google.maps.Marker({
-                        map: map,
-                        position: point,
-                        icon: "img/pinkball.png",
-                        animation: google.maps.Animation.BOUNCE,
+                              var text = document.createElement('text');
+                              text.textContent =obj.devicelocation[i].placename
+                              infowincontent.appendChild(text);
+
+                               infowincontent.appendChild(document.createElement('br'));
+
+
+                               var time = document.createElement('text');
+                              time.textContent =obj.devicelocation[i].time
+                              infowincontent.appendChild(time);
+
+                              var icon = customLabel[obj.devicelocation[i].type] || {};
+
+                              var marker = new google.maps.Marker({
+                                map: map,
+                                position: result[i],
+                                label: 'S'
+                                
+                            });
+                            
+
+                            marker.addListener('click', function() {
+                              infoWindow.setContent(infowincontent);
+                              infoWindow.open(map, marker);
+                            });
+
+                        }
+                       else{
+                          var infowincontent = document.createElement('div');
+                          var strong = document.createElement('strong');
+                          strong.textContent = obj.devicelocation[i].name
+                          infowincontent.appendChild(strong);
+                     
+                          infowincontent.appendChild(document.createElement('br'));
+
+
+
+                          var text = document.createElement('text');
+                          text.textContent =obj.devicelocation[i].placename
+                          infowincontent.appendChild(text);
+
+                           infowincontent.appendChild(document.createElement('br'));
+
+
+                           var time = document.createElement('text');
+                          time.textContent =obj.devicelocation[i].time
+                          infowincontent.appendChild(time);
+
+                          var icon = customLabel[obj.devicelocation[i].type] || {};
+
+                          var marker = new google.maps.Marker({
+                            map: map,
+                            position: result[i]
+                            
+                        });
                         
-                      });
-                       marker.setMap(map);
 
-                    var infowindow = new google.maps.InfoWindow({
-                      content: infowincontent
-                    });
-                    infowindow.open(map,marker);
+                        marker.addListener('click', function() {
+                          infoWindow.setContent(infowincontent);
+                          infoWindow.open(map, marker);
+                        });
+                      }
+                        
+                    }
+                  
+             
+                 
+
+              
+          
+
+                  var flightPath = new google.maps.Polyline({
+                    path: result,
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                  });
+
+                  flightPath.setMap(map);
+               }
+
+             }
+
   
-            });
-          });
-        }
+
+          }
+        //     function myMap() {
+        //         var map = new google.maps.Map(document.getElementById('map'), {
+        //           center: new google.maps.LatLng(5.7596123,-0.2194058),
+        //           zoom: 16
+        //         });
+              
+        //           place=getQueryVariable("placename");
+        //         var infoWindow = new google.maps.InfoWindow;
+                
+        //            var ajaxPageUrl='http://suivre.000webhostapp.com/ajaxPage.php?cmd=8&place='+place;
+        //                             // Change this depending on the name of your PHP or XML file
+
+        //           var counter=0;
+        //           var listarray=[];
+        //           downloadUrl(ajaxPageUrl, function(data) {
+        //             var xml = data.responseXML;
+        //             var markers = xml.documentElement.getElementsByTagName('marker');
+        //             Array.prototype.forEach.call(markers, function(markerElem) {
+        //               var name = markerElem.getAttribute('name');
+        //               var address = markerElem.getAttribute('address');
+        //               var type = markerElem.getAttribute('type');
+        //               var point = new google.maps.LatLng(
+        //                   parseFloat(markerElem.getAttribute('lat')),
+        //                   parseFloat(markerElem.getAttribute('lng')));
+
+        //               if(listarray.includes(name)){
+
+        //              }
+        //              else{
+        //               listarray[counter]=name;
+        //               counter++;
+
+        //               var infowincontent = document.createElement('div');
+        //               var strong = document.createElement('strong');
+        //               strong.textContent = name
+        //               infowincontent.appendChild(strong);
+                 
+        //               infowincontent.appendChild(document.createElement('br'));
+
+        //               var text = document.createElement('text');
+        //               text.textContent = address
+        //               infowincontent.appendChild(text);
+        //               var icon = customLabel[type] || {};
+        //               var marker = new google.maps.Marker({
+        //                 map: map,
+        //                 position: point,
+        //                 icon: "img/pinkball.png",
+        //                 animation: google.maps.Animation.BOUNCE,
+                        
+        //               });
+        //                marker.setMap(map);
+
+        //             var infowindow = new google.maps.InfoWindow({
+        //               content: infowincontent
+        //             });
+        //             infowindow.open(map,marker);
+        //           }
+  
+        //     });
+        //   });
+        // }
 
 
 
@@ -169,9 +308,7 @@
         </div>
     </div>
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+        
         <script src="vendor/waves/waves.min.js"></script>
         <script src="vendor/wow/wow.min.js"></script>
         <script src="js/nativedroid2.js"></script>
