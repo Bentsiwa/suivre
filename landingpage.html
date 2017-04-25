@@ -284,7 +284,7 @@
 		     function alertsecurity(deviceid,name,description,tagidentification,locationid,image){
 		   	var admin=localStorage.getItem('org');
 		   		var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=14&userid="+userid+"&deviceid="+deviceid+"&name="+name+"&description="+description+"&locationid="+locationid+"&image="+image+"&admin="+admin;
-		  		prompt('url',ajaxPageUrl);
+		  		
 		  		alert("Notification sent");
 		      $.ajax(ajaxPageUrl,{
 		        async:true,

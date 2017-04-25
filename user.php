@@ -150,8 +150,7 @@
 		}
 
 		function getDeviceLocationWithID($filter){
-			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','')=location.locationid inner join device on 
-			devicelocation.deviceid=device.deviceid inner join user on device.userid=user.userid  where device.track='1' and device.time<= devicelocation.time and user.userid=$filter order by time desc";
+			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','')=location.locationid  inner join device on devicelocation.deviceid=device.deviceid inner join user on device.userid=user.userid where device.track='1' and device.time<= devicelocation.time and user.userid=$filter group by device.name order by time desc";
 
             return $this->query($strQuery);
 		}
@@ -195,11 +194,12 @@
 			return $this->query($strQuery);
 		}
 
-		function addReader($place, $lat, $lng, $type){
+		function addReader($place, $lat, $lng, $type,$admin){
 			$strQuery="insert into location set
 			placename='$place',
 			latitude ='$lat',
 			longitude ='$lng',
+			admin ='$admin',
 			type='$type'";
 						
 			return $this->query($strQuery);
@@ -243,11 +243,12 @@
 		}
 
 
-		function getAllUsers(){
+		function getAllUsers($id){
 					/**
 			*@var string $strQuery should contain insert query
 			*/
-			$strQuery="select * from user";
+			$strQuery="select firstname, lastname,email, phone from user where admin=$id";
+
 
 							
 			return $this->query($strQuery);
@@ -268,7 +269,7 @@
 		}
 
 		function countLocationFrequency($admin){
-			$strQuery="select location.placename, count(devicelocation.locationid) as count from devicelocation inner join location on location.locationid=replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','') inner join user on user.userid=devicelocation.userid where user.admin='$admin' group by location.locationid ";
+			$strQuery="select location.placename, count(devicelocation.locationid) as count from devicelocation inner join location on location.locationid=replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','') inner join user on user.admin=location.admin where user.admin='$admin' group by location.locationid ";
 		
 				return $this->query($strQuery);
 

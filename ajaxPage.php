@@ -1028,7 +1028,10 @@ function addReader(){
 		echo '{"result":0,"message":"Type is not given"}';
 		return;
 	}
-
+	if(!isset($_REQUEST['admin'])){
+		echo '{"result":0,"message":"Admin ID is not given"}';
+		return;
+	}
 
 
 	if($_REQUEST['place']==""){
@@ -1047,6 +1050,10 @@ function addReader(){
 		echo '{"result":0,"message":"Type is not given"}';
 		return;
 	}
+	if($_REQUEST['admin']==""){
+		echo '{"result":0,"message":"Admin ID is not given"}';
+		return;
+	}
 
 
 
@@ -1054,11 +1061,12 @@ function addReader(){
 	$lat=$_REQUEST['lat'];
 	$lng=$_REQUEST['lng'];
 	$type=$_REQUEST['type'];
+	$adminid=$_REQUEST['admin'];
 	
 
 	include('user.php');
 	$obj=new user();
-	$row=$obj->addReader($place, $lat, $lng, $type);
+	$row=$obj->addReader($place, $lat, $lng, $type,$adminid);
 
 	if($row==true){
 		echo '{"result":1,"message":"Reader added"}';
@@ -1247,10 +1255,20 @@ function getsAlerts(){
 
 }
 function getAllUsers(){
+	if(!isset($_REQUEST['admin'])){
+		echo '{"result":0,"message":"ID is not given"}';
+		return;
+	}
+	if($_REQUEST['admin']==""){
+		echo '{"result":0,"message":"ID is not given"}';
+		return;
+	}
+
+	$admin=$_REQUEST['admin'];
 
 	include('user.php');
 	$obj=new user();
-	$row=$obj->getAllUsers();
+	$row=$obj->getAllUsers($admin);
 	if($row==true){
 		$row=$obj->fetch();
 		echo '{"result":1,"users":[';

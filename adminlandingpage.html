@@ -168,7 +168,7 @@
 		<script src="nd2settings.js"></script>
 	<script>
 
-	var id=localStorage.getItem("id");
+	var id=localStorage.getItem("adminid");
 
 		function getAlertsComplete(xhr,status){
 				if(status!="success"){
@@ -311,7 +311,7 @@
 			function getLocations(){
 
 			    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=19&admin="+id;
-		prompt('url',ajaxPageUrl);
+				
 			      $.ajax(ajaxPageUrl,{
 			        async:true,
 			        complete:getLocationsComplete
@@ -340,6 +340,7 @@
                     $("#lat").val("");
                   
                     $("#lng").val("");
+                    $("#type").val("");
 		        
 		         }
 		          
@@ -352,9 +353,9 @@
 		    var lat = document.getElementById("lat").value;
 		    var lng = document.getElementById("lng").value
 		    var type = document.getElementById("type").value;
-		  
+		  	var adminid=localStorage.getItem('adminid');
 		    
-		    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=20&place="+place+"&lat="+lat+"&lng="+lng+"&type="+type;
+		    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=20&place="+place+"&lat="+lat+"&lng="+lng+"&type="+type+"&admin="+adminid;
 		
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
@@ -362,11 +363,9 @@
 		      });
 		   }
 		    function getUsers(){
-              	
-              
-		
-		      var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=22";
-		
+		    	var adminid=localStorage.getItem('adminid');	
+		      var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=22&admin="+adminid;
+				
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:getUsersComplete
