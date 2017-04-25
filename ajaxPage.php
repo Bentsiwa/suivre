@@ -515,9 +515,18 @@ function getDeviceLocationXML(){
 }
 
 function getDeviceLocation(){
+	 if(!isset($_REQUEST['userid'])){
+	 	echo '{"result":0,"message":"User Id has not been selected"}';
+		return;
+	 }
+	 if($_REQUEST['userid']==""){
+		echo '{"result":0,"message":"User id has not been selected"}';
+		return;
+	}
+	$userid=$_REQUEST['userid'];
 	include('user.php');
 	$obj=new user();
-	$row=$obj->getAllDeviceLocation();
+	$row=$obj->getunorderedDeviceLocationWithID($userid);
 	if($row==true){
 		$row=$obj->fetch();
 		echo '{"result":1,"devicelocation":[';

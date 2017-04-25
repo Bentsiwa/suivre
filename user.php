@@ -155,6 +155,12 @@
             return $this->query($strQuery);
 		}
 
+		function getunorderedDeviceLocationWithID($filter){
+			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','')=location.locationid  inner join device on devicelocation.deviceid=device.deviceid inner join user on device.userid=user.userid where device.track='1' and device.time<= devicelocation.time and user.userid=$filter order by time desc";
+
+            return $this->query($strQuery);
+		}
+
 		function getAllDeviceLocation($filter=false){
 			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','')=location.locationid inner join device on devicelocation.deviceid=device.deviceid";
 

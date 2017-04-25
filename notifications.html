@@ -58,30 +58,7 @@
             
             <div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s"  data-inset="false">
                 <ul data-role="listview" data-icon="false" id="devicelocations">
-                <!-- <li>
-                    <a href="#">
-                        <img src="img/green.jpg" class="ui-thumbnail ui-thumbnail-circular" />
-                        <h2><i class="nd2-subhead"></i>Iphone 6</h2>
-                        <h4><i class="zmdi zmdi-pin zmd-1x clr-red"></i>Library</h4>
-                        <p>12:00pm</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="img/green.jpg" class="ui-thumbnail ui-thumbnail-circular" />
-                        <h2><i class="nd2-subhead"></i>HP laptop</h2>
-                        <h4><i class="zmdi zmdi-pin zmd-1x clr-red"></i>Akonor Cafetaria</h4>
-                        <p>14:45pm</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="img/green.jpg" class="ui-thumbnail ui-thumbnail-circular" />
-                        <h2><i class="nd2-subhead"></i>Red dress</h2>
-                        <h4><i class="zmdi zmdi-pin zmd-1x clr-red"></i>Hostel</h4>
-                        <p>16:09pm</p>
-                    </a>
-                </li> -->
+          
             </ul>
 
         </div>
@@ -120,8 +97,9 @@
             
 
            function getDeviceLocations(){
+ var userid=localStorage.getItem('id');
         
-                var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=9";
+                var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=9&userid="+userid;
          
               $.ajax(ajaxPageUrl,{
                 async:true,
