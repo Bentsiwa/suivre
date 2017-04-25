@@ -20,13 +20,8 @@
 			*@var string $strQuery should contain insert query
 			*/
 
-			$strQuery="select * from user where password like  '$password' and email like '$email'";
-
-
-
-			// $strQuery="select firstname, email, phone, lastname, notification, password
-			//  from user where password like replace(cast(aes_encrypt('$password', '$email') as char(100)),'rand4569','') and email like '$email'";
-			//  echo $strQuery;
+			$strQuery="select userid, admin, firstname, email, phone, lastname, notification, replace(cast(aes_decrypt(password, '$email') as char(100)),'$email','') as password from user where  email like '$email' and replace(cast(aes_decrypt(password, '$email') as char(100)),'$email','') like '$password'";
+		
 			
 			return $this->query($strQuery);
 		}
@@ -39,11 +34,13 @@
 
 
 		
-		function addUser($firstname,$lastname,$email,$tel, $password, $notification){
+		function addUser($firstname,$lastname,$email,$tel, $password, $notification, $admin){
 
 			/**
 			*@var string $strQuery should contain insert query
 			*/
+
+		
 
 			$strQuery="insert into user set
 			firstname ='$firstname',
@@ -51,16 +48,8 @@
 							phone='$tel',
 							lastname='$lastname',
 							notification='$notification',
-							password='$password'";
-
-			// $strQuery="insert into user set
-			// firstname ='$firstname',
-			// 				email='$email',
-			// 				phone='$tel',
-			// 				lastname='$lastname',
-			// 				notification='$notification',
-			// 				password=aes_encrypt(concat('$password', 'rand4569'),'$email')";
-							//password='$password'";
+							password=aes_encrypt(concat('$password', '$email'),'$email')";
+							
 				
 				
 			return $this->query($strQuery);
@@ -149,20 +138,35 @@
 		}
 
 		function getDeviceLocation($filter=false){
-			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on location.locationid=devicelocation.locationid inner join device on devicelocation.deviceid=device.deviceid";
+			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','')=location.locationid inner join device on devicelocation.deviceid=device.deviceid";
 
 			if($filter!=false){
-                $strQuery=$strQuery . " where device.deviceid='$filter' and device.track='1' and device.time >= devicelocation.time order by time asc ";
+                $strQuery=$strQuery . " where device.deviceid='$filter' and device.track='1' and device.time <= devicelocation.time order by time asc ";
             }else{
-            	$strQuery=$strQuery . " where device.track='1' order by time desc";
+            	$strQuery=$strQuery . " where device.track='1' and device.time <= devicelocation.time order by time desc";
             }
            
-
-
-         
-			return $this->query($strQuery);
+            return $this->query($strQuery);
 		}
 
+		function getDeviceLocationWithID($filter){
+			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','')=location.locationid inner join device on 
+			devicelocation.deviceid=device.deviceid inner join user on device.userid=user.userid  where device.track='1' and device.time<= devicelocation.time and user.userid=$filter order by time desc";
+
+            return $this->query($strQuery);
+		}
+
+		function getAllDeviceLocation($filter=false){
+			$strQuery="select device.deviceid, device.name, device.image, location.locationid as locationid, location.placename, location.type, location.latitude, location.longitude, devicelocation.time from location inner join devicelocation on replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','')=location.locationid inner join device on devicelocation.deviceid=device.deviceid";
+
+			if($filter!=false){
+                $strQuery=$strQuery . " where device.deviceid='$filter' and device.track='1' and device.time <= devicelocation.time order by time asc ";
+            }else{
+            	$strQuery=$strQuery . " order by time desc";
+            }
+           
+            return $this->query($strQuery);
+		}
 
 		
 		function deleteDevice($deviceid){
@@ -171,19 +175,21 @@
 		}
 
 		function addDeviceLocation($device,$currentdatetime,$location){
-			$strQuery="insert into devicelocation set
+			$strQuery="insert into devicelocation set 
 			deviceid='$device',
-			locationid ='$location',
+			locationid =aes_encrypt(concat('$location', 'rand23784'),'rand23784key'),
 			time='$currentdatetime'";
 						
+
 			return $this->query($strQuery);
 		}
 
-		function addAlert($userid, $deviceid, $locationid, $currentdatetime ){
+		function addAlert($userid, $deviceid, $locationid, $currentdatetime, $admin ){
 			$strQuery="insert into securityalert set
 			deviceid='$deviceid',
 			locationid ='$locationid',
 			userid ='$userid',
+			admin ='$admin',
 			time='$currentdatetime'";
 						
 			return $this->query($strQuery);
@@ -201,15 +207,19 @@
 
 
 		function findDevice($tag){
-				$strQuery="select device.deviceid as deviceid, device.name as name, device.track as track, device.description as description, user.phone as phone, user.notification as notification, user.email as email from device inner join user on device.userid=user.userid where tagidentification='$tag'";
+				$strQuery="select device.deviceid as deviceid, device.name as name, device.track as track, device.description as description, user.phone as phone, user.notification as notification, user.admin as admin, user.email as email from device inner join user on device.userid=user.userid where tagidentification='$tag'";
 
 							
 			return $this->query($strQuery);
 		}
 
-		function getLocations(){
+		function getLocations($id=false){
 			$strQuery="select * from location";
-			
+
+			if($id!=false){
+                $strQuery=$strQuery . " where admin=$id";
+            }
+
 			return $this->query($strQuery);
 		}
 
@@ -257,18 +267,30 @@
 				return $this->query($strQuery);
 		}
 
-		function countLocationFrequency(){
-			$strQuery="select location.placename, count(devicelocation.locationid) as count from devicelocation inner join location on location.locationid=devicelocation.locationid group by location.locationid";
+		function countLocationFrequency($admin){
+			$strQuery="select location.placename, count(devicelocation.locationid) as count from devicelocation inner join location on location.locationid=replace(cast(aes_decrypt(devicelocation.locationid, 'rand23784key') as char(100)),'rand23784','') inner join user on user.userid=devicelocation.userid where user.admin='$admin' group by location.locationid ";
 		
 				return $this->query($strQuery);
 
 		}
 	
-		function getAlerts(){
-			$strQuery="select location.placename as placename, securityalert.time as time, count(securityalert.locationid) as count from securityalert inner join location on location.locationid=securityalert.locationid group by location.locationid";
-	
+		function getAlerts($admin){
+			$strQuery="select location.placename as placename, securityalert.time as time, count(securityalert.locationid) as count from securityalert inner join location on location.locationid=securityalert.locationid  where securityalert.admin=$admin group by location.locationid ";
+
 			return $this->query($strQuery);
 
+		}
+
+
+		function getAdmins($id=false){
+			$strQuery="select * from admin";
+
+
+			if($id!=false){
+                $strQuery=$strQuery . " where adminid=$id";
+            }
+			
+			return $this->query($strQuery);
 		}
 
 

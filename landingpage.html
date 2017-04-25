@@ -105,7 +105,7 @@
 			</div>
 
 			<div data-role="header" data-position="fixed" >
-				<a href="#bottomsheet" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-more-vert"></i></a>
+				<a href="" onclick="adddevice()" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-plus"></i></a>
 				<a href="#leftpanel" class="ui-btn ui-btn-left"><i class="zmdi zmdi-menu"></i></a>
 				<h1 class="wow fadeIn" data-wow-delay='0.2s'>Suivre</h1>
 			</div>
@@ -144,21 +144,7 @@
 		<script type="text/javascript">
 
 
-			new $.nd2Search({
-						placeholder : "Search",
-	          defaultIcon : "globe-alt",
-	          source : [
-	              {"label": "iphone", "value": "IP"},
-	              {"label": "Red Polker Dot dress", "value": "RD"},
-	              {"label": "HP laptop", "value": "HP"},
-	             
-	          ],
-	          fn : function(result) {
-	            console.log('--- Your custom handling ---');
-	            console.log('you picked: ');
-	            console.log(result);
-	          }
-			});
+		
 
 		</script>
 		<script>
@@ -178,7 +164,7 @@
 
 			function viewDevice(deviceid,name,description,tagidentification,locationid,image){
 		 
-		   
+		  
 
 		   	window.location.href="devicepage.html?deviceid="+deviceid+"&name="+name+"&description="+description+"&tagidentification="+tagidentification+"&locationid="+locationid+"&image="+image;
 
@@ -245,12 +231,10 @@
               }
             }
 
-              function getDevices(){
-              	
-              
-		
+            function getDevices(){
+   
 		      var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=4&id="+userid;
-		  
+		    
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:getDevicesComplete
@@ -277,6 +261,7 @@
 		              }
 		              
 		              while(length>0){
+
 		              	if(length==1){
 		              		result+="<div class='row'><div class='col-xs-6'><div class='box'><div  class='nd2-card'><a href='#' onclick='viewDevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' ><div class='card-media'><img style='width:100%;height:150px;'src='"+obj.device[length-1].image+"'></a><div class='card-media-overlay'><div class='card-title has-supporting-text'><h3 class='nd2-subhead clr-white'>"+obj.device[length-1].name+"</h3></div></div></div></a><div class='card-action'><div class='row between-xs'><div class='col-xs-12 align-right'><div class='box'><button onclick='editdevice("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-edit  clr-teal'></i></button><a href='singledevicemap.html?placename="+obj.device[length-1].deviceid+"' class='ui-btn ui-btn-inline ui-btn-fab'><i class='zmdi zmdi-pin clr-teal'></i></a><button class='ui-btn ui-btn-inline ui-btn-fab' onclick='alertsecurity("+obj.device[length-1].deviceid+","+"&apos;"+obj.device[length-1].name+"&apos;"+","+"&apos;"+obj.device[length-1].description+"&apos;"+","+obj.device[length-1].tagidentification+","+obj.device[length-1].locationid+","+"&apos;"+obj.device[length-1].image+"&apos;"+")'><i class='zmdi zmdi-alert-circle clr-red'></i></i></button></div></div></div></div></div></div></div></div></div>";
 		              	}
@@ -297,9 +282,10 @@
 		    }
 
 		     function alertsecurity(deviceid,name,description,tagidentification,locationid,image){
-		   		
-		   		var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=14&userid="+userid+"&deviceid="+deviceid+"&name="+name+"&description="+description+"&locationid="+locationid+"&image="+image;
-		  	alert("Notification sent");
+		   	var admin=localStorage.getItem('org');
+		   		var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=14&userid="+userid+"&deviceid="+deviceid+"&name="+name+"&description="+description+"&locationid="+locationid+"&image="+image+"&admin="+admin;
+		  		prompt('url',ajaxPageUrl);
+		  		alert("Notification sent");
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:alertComplete
@@ -325,6 +311,10 @@
                  }
                   
               }
+            }
+
+            function adddevice(){
+            	window.location.href="adddevice.html";
             }
 		    
 

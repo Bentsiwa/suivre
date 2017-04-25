@@ -27,7 +27,7 @@
 			
 
 			<div data-role="header" data-position="fixed" >
-				<a href="http://suivre.000webhostapp.com/admin.html" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-triangle-down"></i></a>
+				<a onclick="logout()" href="" class="ui-btn ui-btn-right wow fadeIn" data-wow-delay='1.2s'><i class="zmdi zmdi-triangle-down"></i></a>
 				
 				<h1 class="wow fadeIn" data-wow-delay='0.2s'>Suivre</h1>
 			</div>
@@ -168,6 +168,8 @@
 		<script src="nd2settings.js"></script>
 	<script>
 
+	var id=localStorage.getItem("id");
+
 		function getAlertsComplete(xhr,status){
 				if(status!="success"){
 		          alert("error while adding user");
@@ -198,19 +200,7 @@
 			          	}
 		          	
 	
-					// var bc2_data = {data_chart};
-
-					// var bc2_options = {
-					//   seriesBarDistance: 7
-					// };
-
-					// var bc2 = new Chartist.Bar('.ct-barchart2', bc2_data, bc2_options);
-					// new Chartist.Bar('.ct-barchart-theme', bc2_data, bc2_options);
-					// new Chartist.Bar('.ct-barchart2', {
-					// 	  data_chart
-					// 	}, {
-					// 	  distributeSeries: true
-					// 	});
+				
 				new Chartist.Line('.ct-barchart2', data_chart, {
 				  low: 0,
 				  showArea: false
@@ -222,8 +212,8 @@
 
 			function getAlerts(){
 
-			    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=21";
-		
+			    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=21&admin="+id;
+	
 			      $.ajax(ajaxPageUrl,{
 			        async:true,
 			        complete:getAlertsComplete
@@ -319,10 +309,9 @@
 
 
 			function getLocations(){
-		
-			    
-			    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=19";
-		
+
+			    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=19&admin="+id;
+		prompt('url',ajaxPageUrl);
 			      $.ajax(ajaxPageUrl,{
 			        async:true,
 			        complete:getLocationsComplete
@@ -451,6 +440,11 @@
 	
 		        }
 		      }
+		    }
+
+		    function logout(){
+		    
+		    	window.location.href="http://suivre.000webhostapp.com/admin.html";
 		    }
 		    
 

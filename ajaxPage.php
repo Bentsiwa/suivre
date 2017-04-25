@@ -70,6 +70,9 @@ $cmd=$_REQUEST['cmd'];
 		case 22:
 			getAllUsers();
 		break;
+		case 23:
+			getAdmins();
+		break;
 
 
 		default:
@@ -106,7 +109,7 @@ function addStartDeviceLocation(){
 	$currentdatetime=date("Y-m-d h:i:s")." ";
 				
 			
-	$row=$obj->addDeviceLocation($device,$currentdatetime,	$location);
+	$row=$obj->addDeviceLocation($device,$currentdatetime, $location);
 	if($row==true){
 		echo '{"result":1,"message":"Device location successfully added"}';
 	}
@@ -138,6 +141,11 @@ function addUser(){
 		echo '{"result":0,"message":"Phone number is not given"}';
 		return;
 	}
+	if(!isset($_REQUEST['org'])){
+		echo '{"result":0,"message":"Organization is not given"}';
+		return;
+	}
+
 
 	if($_REQUEST['firstname']==""){
 		echo '{"result":0,"message":"First name is not given"}';
@@ -159,6 +167,10 @@ function addUser(){
 		echo '{"result":0,"message":"Phone number is not given"}';
 		return;
 	}
+	if($_REQUEST['org']==""){
+		echo '{"result":0,"message":"Organization is not given"}';
+		return;
+	}
 
 	$firstname=$_REQUEST['firstname'];
 	$lastname=$_REQUEST['lastname'];
@@ -166,10 +178,12 @@ function addUser(){
 	$password=$_REQUEST['password'];
 	$phone=$_REQUEST['phone'];
 	$notification=$_REQUEST['notification'];
+	$admin=$_REQUEST['org'];
+
 
 	include('user.php');
 	$obj=new user();
-	$row=$obj->addUser($firstname, $lastname, $email, $phone,$password,$notification);
+	$row=$obj->addUser($firstname, $lastname, $email, $phone,$password,$notification,$admin);
 
 	if($row==true){
 		echo '{"result":1,"message":"Sign up successful"}';
@@ -218,14 +232,6 @@ function login(){
 
 }
 function getDevices(){
-	// if(!isset($_REQUEST['id'])){
-	// 	echo '{"result":0,"message":"User can not be identified"}';
-	// 	return;
-	// }
-	// if($_REQUEST['id']==""){
-	// 	echo '{"result":0,"message":"User can not be identified"}';
-	// 	return;
-	// }
 
 	include('user.php');
 	$obj=new user();
@@ -256,6 +262,35 @@ function getDevices(){
 	}
 
 }
+
+function getAdmins(){
+
+	include('user.php');
+	$obj=new user();
+
+
+	$row=$obj->getAdmins();
+
+	if($row==true){
+		$row=$obj->fetch();
+			echo '{"result":1,"admin":[';
+			while($row){
+				echo json_encode($row);
+
+				$row=$obj->fetch();
+				if($row!=false){
+					echo ",";
+				}
+			}
+		echo "]}";
+	}
+
+	else{
+		echo '{"result":0,"message":"Error fetching admins"}';
+	}
+
+}
+
 
 
 function addDevice(){
@@ -437,13 +472,23 @@ function parseToXML($htmlStr)
 }
 
 function getDeviceLocationXML(){
+	 if(!isset($_REQUEST['userid'])){
+	 	echo '{"result":0,"message":"User ID cannot be found"}';
+		return;
+	 }
+	  if($_REQUEST['userid']==""){
+		echo '{"result":0,"message":"User ID is not given"}';
+		return;
+	}
 
-	header("Content-type: text/xml");
-	echo '<markers>';
+	 $userid=$_REQUEST['userid'];
+
 	include('user.php');
 	$obj=new user();
-	$row=$obj->getDeviceLocation();
+	$row=$obj->getDeviceLocationWithID($userid);
 	if($row==true){
+		header("Content-type: text/xml");
+		echo '<markers>';
 		$row=$obj->fetch();
 			
 			while($row){
@@ -472,7 +517,7 @@ function getDeviceLocationXML(){
 function getDeviceLocation(){
 	include('user.php');
 	$obj=new user();
-	$row=$obj->getDeviceLocation();
+	$row=$obj->getAllDeviceLocation();
 	if($row==true){
 		$row=$obj->fetch();
 		echo '{"result":1,"devicelocation":[';
@@ -625,6 +670,7 @@ function addDeviceLocation(){
 	$obj=new user();
 
 		$row=$obj->findDevice($tag);
+
 		if($row==true){
 			$deviceid=$obj->fetch();
 
@@ -736,7 +782,14 @@ function addDeviceLocation(){
 function getLocations(){
 	include('user.php');
 	$obj=new user();
-	$row=$obj->getLocations();
+
+	if(isset($_REQUEST['admin'])){
+		$id=$_REQUEST['admin'];
+		$row=$obj->getLocations($id);
+	}else{
+		$row=$obj->getLocations();
+	}
+
 	if($row==true){
 		$row=$obj->fetch();
 		echo '{"result":1,"location":[';
@@ -805,6 +858,14 @@ function alertSecurity(){
 		echo '{"result":0,"message":"Image is not given"}';
 		return;
 	}
+	if(!isset($_REQUEST['admin'])){
+		echo '{"result":0,"message":"Admin details is not given"}';
+		return;
+	}
+	if($_REQUEST['admin']==""){
+		echo '{"result":0,"message":"Admin details is not given"}';
+		return;
+	}
 	
 	$name=$_REQUEST['name'];
 	$location=$_REQUEST['locationid'];
@@ -812,6 +873,7 @@ function alertSecurity(){
 	$image=$_REQUEST['image'];
 	$deviceid=$_REQUEST['deviceid'];
 	$user=$_REQUEST['userid'];
+	$admin=$_REQUEST['admin'];
 
 	$alertlocation=$location;
 	$alertuser=$user;
@@ -840,6 +902,16 @@ function alertSecurity(){
 		return;
 	}
 
+	$row=$obj->getAdmins($admin);
+	if($row==true){
+		$admindetails=$obj->fetch();
+	}
+
+	else{
+		echo '{"result":0,"message":"Could not fetch admin details"}';
+		return;
+	}
+
 	require './Smsgh/Api.php';
 
 	$auth = new BasicAuth("znlltiuf", "qmidxlrw");
@@ -859,11 +931,10 @@ function alertSecurity(){
 
 	    $mesg = new Message();
 	    $mesg->setContent("Alert from ".$user['firstname']." ".$user['lastname'].". ".$name." (".$description.") moved to the ".$location['placename']." at ".$currentdatetime);
-	    $mesg->setTo("0573283028");
+	    $mesg->setTo($admindetails['securityphoneum']);
 	    $mesg->setFrom("Suivre App Security Alert!");
 	    $mesg->setRegisteredDelivery(true);
 
-	   
 
 	    $messageResponse = $messagingApi->sendMessage($mesg);
 
@@ -879,20 +950,18 @@ function alertSecurity(){
 	} catch (Exception $ex) {
 	    echo $ex->getTraceAsString();
 	}
-
-	    	$to = "efuabainson@gmail.com"; // this is your Email address
-		    $from = "efuabainson@gmail.com"; // this is the sender's Email address
+	    	$to = $admindetails['securityemail']; // this is your Email address
+		    $from = $user['email']; // this is the sender's Email address
 		    $subject = "Suivre App Security Alert!";
-		    $subject2 = "Copy of Suivre App Alert";
+		    
 		    $message = "Alert from ".$user['firstname']." ".$user['lastname'].". ".$name." (".$description.") moved to the ".$location['placename']." at ".$currentdatetime;
-		    $message2 = "Alert from ".$user['firstname']." ".$user['lastname'].". ".$name." (".$description.") moved to the ".$location['placename']." at ".$currentdatetime;
-
+		    
 		    $headers = "From:" . $from;
-		    $headers2 = "From:" . $to;
+		   
 		    mail($to,$subject,$message,$headers);
 
 	
-	$row=$obj->addAlert($alertuser, $deviceid, $location['locationid'], $currentdatetime);
+	$row=$obj->addAlert($alertuser, $deviceid, $location['locationid'], $currentdatetime, $user['admin']);
 	if($row==true){
 		echo '{"result":1,"message":"Alert added"}';
 	}
@@ -1111,9 +1180,19 @@ function loginAdmin(){
 }
 
 function countLocationFrequency(){
+	if(!isset($_REQUEST['admin'])){
+		echo '{"result":0,"message":"ID is not given"}';
+		return;
+	}
+	if($_REQUEST['admin']==""){
+		echo '{"result":0,"message":"ID is not given"}';
+		return;
+	}
+
+	$id=$_REQUEST['admin'];
 	include('user.php');
 	$obj=new user();
-	$row=$obj->countLocationFrequency();
+	$row=$obj->countLocationFrequency($id);
 	if($row==true){
 		$row=$obj->fetch();
 		echo '{"result":1,"location":[';
@@ -1135,9 +1214,19 @@ function countLocationFrequency(){
 }
 
 function getsAlerts(){
+	if(!isset($_REQUEST['admin'])){
+		echo '{"result":0,"message":"ID is not given"}';
+		return;
+	}
+	if($_REQUEST['admin']==""){
+		echo '{"result":0,"message":"ID is not given"}';
+		return;
+	}
+
+	$admin=$_REQUEST['admin'];
 	include('user.php');
 	$obj=new user();
-	$row=$obj->getAlerts();
+	$row=$obj->getAlerts($admin);
 	if($row==true){
 		$row=$obj->fetch();
 		echo '{"result":1,"location":[';

@@ -72,18 +72,12 @@
                   zoom: 16
                 });
                 
-                 // var marker = new google.maps.Marker({position:new google.maps.LatLng(5.7596123,-0.2194058)});
-
-                 //    marker.setMap(map);
-                 //     infowindow = new google.maps.InfoWindow({
-                 //    content: "You are here!"
-                 //  });
-                 //     infowindow.open(map,marker);
+               var userid=localStorage.getItem('id');
 
                 var infoWindow = new google.maps.InfoWindow;
                 //var place=getQueryVariable("placename");
-                   var ajaxPageUrl='http://suivre.000webhostapp.com/ajaxPage.php?cmd=7';
-               
+                   var ajaxPageUrl='http://suivre.000webhostapp.com/ajaxPage.php?cmd=7&userid='+userid;
+            
                   var counter=0;
                   var listarray=[];
                  

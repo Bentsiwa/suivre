@@ -25,27 +25,7 @@
                 var mobile_system = '';
               }
          </script>
-        <script >
-        //dsf
-		// 	document.addEventListener("deviceready",onDeviceReady,false);
-		// 	function onDeviceReady(){
-		// 		alert("here");
-		// 		 var push = PushNotification.init({ "android": {"senderID": "81511517930"}});
-		// 		 push.on('registration', function(data) {
-		// 		 console.log(data.registrationId);
-		// 		 alert(data.registrationId);
-		// 		 document.getElementById("gcm_id").innerHTML = data.registrationId;
-		// 		 });
 
-		// 		 push.on('notification', function(data) {
-		// 		 alert(data.title+" Message: " +data.message);
-		// 		 });
-
-		// 		 push.on('error', function(e) {
-		// 		 alert(e);
-		// 		 });
-		// 	}
-		// </script>
 
      
 
@@ -75,7 +55,7 @@
 	                <button style="background-color:#00b3b3; color:white;" id="login" class="ui-btn">Login</button>
                  </div>
                  <br>
-                 <h6 class="clr-white" >Don't have an account? <a href="" class="clr-white" id="register"><b class="clr-white">Sign up</b></a></h6>
+                 <center><h6 class="clr-white" >Don't have an account? <a href="" class="clr-white" id="register"><b class="clr-white">Sign up</b></a></h6></center>
 
            
          </form>
@@ -121,6 +101,10 @@
 		            localStorage.setItem("firstname",obj.user.firstname);
     				localStorage.setItem("lastname",obj.user.lastname);
     				localStorage.setItem("id",obj.user.userid);
+    				localStorage.setItem("org",obj.user.admin);
+
+    			
+
     				
 		          	window.location.href="landingpage.html";
 		        }
@@ -133,6 +117,7 @@
 		   function login(){
 		    var email = document.getElementById("email").value;
 		    var password = document.getElementById("password").value;
+
 		    localStorage.setItem("email",email);
     		localStorage.setItem("password",password);
 

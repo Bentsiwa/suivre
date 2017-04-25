@@ -94,7 +94,7 @@
 		          }
 		          else{
 		         	alert(obj.message);
-		          	window.location.href="http://suivre.000webhostapp.com/adminlandingpage.html";
+		          	window.location.href="http://suivre.000webhostapp.com/admin.html";
 		         }
 		          
 		      }
@@ -108,6 +108,12 @@
 		    var password = document.getElementById("password").value;
 		    var orgnum = document.getElementById("orgnum").value;
 		    var snum = document.getElementById("snum").value;
+
+		    localStorage.setItem("name",orgname);
+    		localStorage.setItem("num",orgnum);
+    		localStorage.setItem("email",orgemail);
+    		localStorage.setItem("password",password);
+
 
 		  
 		    

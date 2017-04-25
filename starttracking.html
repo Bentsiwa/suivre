@@ -140,8 +140,8 @@
      
           
       function getDevices(){
-    
-          var ajaxPageUrl="https://suivre.000webhostapp.com/ajaxPage.php?cmd=4";
+          var userid=localStorage.getItem('id');
+          var ajaxPageUrl="https://suivre.000webhostapp.com/ajaxPage.php?cmd=4&id="+userid;
           //prompt('url',ajaxPageUrl);
           $.ajax(ajaxPageUrl,{
             async:true,
@@ -192,9 +192,10 @@
 
 
         function getLocations(){
-    
-          var ajaxPageUrl="https://suivre.000webhostapp.com/ajaxPage.php?cmd=13";
-          
+         var admin=localStorage.getItem('org');
+
+          var ajaxPageUrl="https://suivre.000webhostapp.com/ajaxPage.php?cmd=13&admin="+admin;
+        
           $.ajax(ajaxPageUrl,{
             async:true,
             complete:getLocationsComplete
@@ -298,9 +299,17 @@
                   var notification=localStorage.getItem(res);
                   var value = notification.split(",");
                    deviceid=value[1];
+
+                     var selectedresult = document.getElementById("location").value;
+                      var str = selectedresult;
+                      var res = str.replace(" ", "%20");
+              
+                     locationid=localStorage.getItem(res);
+
+
                  
                   var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=16&deviceid="+value[1]+"&locationid="+locationid;
-                 
+
                   $.ajax(ajaxPageUrl,{
                     async:true,
                     complete:starttrackingCompletely

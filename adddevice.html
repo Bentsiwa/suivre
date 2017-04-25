@@ -83,7 +83,9 @@
                        <br/>
 
                         <br>
-                        <input id="submit" type="submit" class="ui-btn ui-btn-raised clr-primary">Add </a>
+                   <!--      <input id="submit" type="submit" style="display:none" class="">
+                        <br> -->
+                        <button style="background-color:#00b3b3; color:white;" id="submit" class="ui-btn">Add</button>
                        
                       </form>
                       </div>
@@ -148,6 +150,8 @@ $(document).ready(function (ev) {
 
 
      $(document).ready(function (e) {
+
+
         $("#fileupload").click(function () {
                    
           $("#pic").trigger('click');
@@ -157,34 +161,12 @@ $(document).ready(function (ev) {
           readURL(this);
         });
 
+        //  $("#addnewdevice").click(function () {                   
+        //   $("#submit").trigger('click');
+        // });
+
      });
 
-  //   $(document).ready(function (e) {
-  
-  //     $("#add").on('click',(function(e) {
-  //       alert("here");
-
-  //       var device = document.getElementById("device").value;
-  //       var description = document.getElementById("description").value;
-  //       var tag = document.getElementById("tag").value;
-  //       var userid=localStorage.getItem("id");
-
-  //        var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=3&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid;
-  //              prompt('url',ajaxPageUrl);
-        
-  //         e.preventDefault();
-  //         $.ajax({
-  //               url: ajaxPageUrl,
-  //               type: "POST",
-  //               data:  new FormData(this),
-  //               contentType: false,
-  //               cache: false,
-  //               processData:false,
-  //               success: addDeviceComplete,
-  //               error: function() {}           
-  //        });
-  //     }));
-  // });
 
 
     function readURL(input) {
@@ -203,7 +185,7 @@ $(document).ready(function (ev) {
            
 
             function addDeviceComplete(xhr,status){
-              alert("in");
+           
                 if(status!="success"){
                   divStatus.innerHTML="error while adding user";
                   return;
@@ -215,7 +197,7 @@ $(document).ready(function (ev) {
                   }
                   else{
                     alert(obj.message);
-                    alert("worked");
+                    
                   
                     $("#device").val("");
                     $("#description").val("");

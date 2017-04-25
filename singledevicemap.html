@@ -76,7 +76,7 @@
             place=getQueryVariable("placename");
 
             var ajaxPageUrl='http://suivre.000webhostapp.com/ajaxPage.php?cmd=8&place='+place;
-       
+
           
              $.ajax(ajaxPageUrl,{
             async:true,
@@ -96,15 +96,23 @@
                 alert(obj.message);
               }
               else{
+            
                  var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 16,
                     center: {lat: 5.7596123, lng: -0.2194058}
                   });
+
                  var infoWindow = new google.maps.InfoWindow;
                     var result = [];
+                    
+                    if(obj.devicelocation.length<=0){
+                      alert("You are not tracking this device");
+                      window.location.href="starttracking.html";
+                    }
                     for (var i=0; i<obj.devicelocation.length; i++) {
                         result[i] = new google.maps.LatLng(obj.devicelocation[i].latitude, obj.devicelocation[i].longitude);
                         if(i==0){
+                     
                               var infowincontent = document.createElement('div');
                               var strong = document.createElement('strong');
                               strong.textContent = obj.devicelocation[i].name
@@ -112,14 +120,12 @@
                          
                               infowincontent.appendChild(document.createElement('br'));
 
-
-
                               var text = document.createElement('text');
                               text.textContent =obj.devicelocation[i].placename
                               infowincontent.appendChild(text);
 
-                               infowincontent.appendChild(document.createElement('br'));
-
+                              infowincontent.appendChild(document.createElement('br'));
+                            
 
                                var time = document.createElement('text');
                               time.textContent =obj.devicelocation[i].time
@@ -142,6 +148,7 @@
 
                         }
                        else{
+                       
                           var infowincontent = document.createElement('div');
                           var strong = document.createElement('strong');
                           strong.textContent = obj.devicelocation[i].name

@@ -34,7 +34,7 @@
      
 
 	</head>
-	<body background="img/bg.png">
+	<body onload="getAdmins()">
 
 		<div data-role="page" style="background:url('img/bg.png')"><br>
 			<center><i class='zmdi zmdi-search-in-page zmd-4x clr-white'></i>
@@ -59,6 +59,8 @@
 				<!-- 	<label style="color:white" for="inputDate"><i class='zmdi zmdi-key zmd-1x'></i><strong>Password</strong></label> -->
 					<input style=" color:black;" type="email" name="email" id="email" value="" data-clear-btn="true" placeholder=" Email">
 	                <input type="password" name="password" id="password" value="" data-clear-btn="true" placeholder=" Password">
+
+	                <label for="device" id="adminlist" style="color:white;" class="select">Organization</label>
 	           
 	                <fieldset data-role="controlgroup">
                             <legend style="color:white;">Select notification channel</legend>
@@ -99,7 +101,7 @@
 		          }
 		          else{
 		         	alert(obj.message);
-		          	window.location.href="landingpage.html";
+		          	window.location.href="index.html";
 		         }
 		          
 		      }
@@ -112,6 +114,9 @@
 		    var email = document.getElementById("email").value;
 		    var password = document.getElementById("password").value;
 		    var phonenum = document.getElementById("phonenum").value;
+
+		    var adminSelect = document.getElementById("admin");
+         	 admin = adminSelect.options[adminSelect.selectedIndex].text;
 
 		    
 		    var checkedsms = $('.messageCheckbox2:checked').val();
@@ -139,13 +144,58 @@
     		
 		 
 		    
-		    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=1&firstname="+firstname+"&lastname="+lastname+"&email="+email+"&phone="+phonenum+"&password="+password+"&notification="+result;
-		 
+		    var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=1&firstname="+firstname+"&lastname="+lastname+"&email="+email+"&phone="+phonenum+"&password="+password+"&notification="+result+"&org="+admin;
+		
 		      $.ajax(ajaxPageUrl,{
 		        async:true,
 		        complete:addUserComplete
 		      });
 		   }
+
+
+
+      function getAdmins(){
+    
+          var ajaxPageUrl="https://suivre.000webhostapp.com/ajaxPage.php?cmd=23";
+      
+         
+          $.ajax(ajaxPageUrl,{
+            async:true,
+            complete:getAdminsComplete
+          });
+       }
+
+      function getAdminsComplete(xhr,status){
+            if(status!="success"){
+              alert("Error during login");
+              return;
+            }
+            else{
+              var obj=JSON.parse(xhr.responseText);
+             
+              if(obj.result==0){
+                alert(obj.message);
+              }
+              else{
+                 //var result="";
+                  var length=obj.admin.length;
+
+                
+                  var data = '<label for="device" class="select" style="color:white;" >Organization</label><select name="select-choice-1" id="admin" data-native-menu="false">';
+                  while(length>0){
+                  
+                    data+="<option value='admin'>"+obj.admin[length-1].orgname+"</option>";
+
+                   length-=1;
+                 }
+                 data+='</select>';
+               
+                adminlist.innerHTML=data;
+   
+  
+            }
+          }
+        }
 		</script>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
