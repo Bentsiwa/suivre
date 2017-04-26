@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="css/nativedroid2.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <script>
+
       var userAgent = navigator.userAgent + '';
       if (userAgent.indexOf('iPhone') > -1) {
         document.write('<script src="js/lib/cordova-iphone.js"></sc' + 'ript>');
@@ -73,11 +74,11 @@
                             <input type="text" name="tag" id="tag" value="" data-clear-btn="true" placeholder="001">
 
                             <a href=""  class="ui-btn" id="fileupload"><i class='zmdi zmdi-file'></i> Upload a Photo</a>
-                          <!--   <center><div class="clr-blue-grey nd2-subhead">
+                            <!-- <center><div class="clr-blue-grey nd2-subhead">
                                 Or -->
-                              <input type="file" name="userImage" id="pic"  style="display:none">
-                         <!--  <a href="" class="ui-btn" id="capturePhoto"><i class='zmdi zmdi-camera'></i>Take a photo</a><br/> -->
-                          <div><center><img id="smallImage" style="width:150px;height:180px;"  src="#" /></center></div>
+                              </div></center> <input type="file" name="userImage" id="pic"  style="display:none">
+                  
+                          <div><center><img id="smallImage" name="takephoto" style="width:150px;height:180px;"  src="#" /></center></div>
                            
                        <br/>
 
@@ -102,18 +103,27 @@
 
   <script >
   var filename ;
+ 
+
+
 $(document).ready(function (ev) {
+
+
+
     var device = document.getElementById("device").value;
     var description = document.getElementById("description").value;
             // var location = document.getElementById("select-choice-1b").value;
     var tag = document.getElementById("tag").value;
     var userid=localStorage.getItem("id");
+
     var form = document.forms.namedItem("uploadform");
-        
+      
     form.addEventListener('submit', function(ev) {
+
       var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=3&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid;
-        
+      
         var formData = new FormData(form);
+     
         $.ajax({
           url: ajaxPageUrl,
           type: "POST",
@@ -130,16 +140,23 @@ $(document).ready(function (ev) {
                   
             $("#tag").val("");
             $("#id").val("");
+            $("#smallImage").attr('src', '');
             },
             error: function() 
             {
+              alert("Device not added");
             }           
          });
         ev.preventDefault();
     }, false);
+
       
   });
+
+
      $(document).ready(function (e) {
+
+
         $("#fileupload").click(function () {
                    
           $("#pic").trigger('click');
@@ -148,22 +165,31 @@ $(document).ready(function (ev) {
         $("#pic").change(function(){
           readURL(this);
         });
+
     
+
      });
+
+
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
+
             
             reader.onload = function (e) {
                 $('#smallImage').attr('src', e.target.result);
+               
             }
-            
+ 
             reader.readAsDataURL(input.files[0]);
+
            
         }
     }
     
            
+
             function addDeviceComplete(xhr,status){
            
                 if(status!="success"){
@@ -184,11 +210,14 @@ $(document).ready(function (ev) {
                   
                     $("#tag").val("");
                     $("#smallImage").attr('src', '');
+
                  }
                   
               }
             }
+
        
+
            function addDevice(){
             var device = document.getElementById("device").value;
             var description = document.getElementById("description").value;
@@ -196,10 +225,13 @@ $(document).ready(function (ev) {
             var tag = document.getElementById("tag").value;
             var userid=localStorage.getItem("id");
             var image=smallImage.src.replace('data:image/jpeg;base64,', '');
+
                //myFile.preventDefault();
                var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=3&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid;
                
+
               var formdata= new FormData(this);
+
               $.ajax({
                 url: ajaxPageUrl,
                 type: "POST",
