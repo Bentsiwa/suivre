@@ -14,12 +14,12 @@
 			navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
 				quality : 50,
 
-				destinationType : destinationType.DATA_URL
+				destinationType : destinationType.FILE_URI
 			});
 		}
 
 		document.getElementById("photolibrary").onclick = function() {
-			alert("here");
+		
 			navigator.notification.alert(
 			    'You are the winner!',  // message
 			    alertDismissed,         // callback
@@ -81,7 +81,7 @@
 
 		smallImage.style.display = 'block';
 
-		smallImage.src = "data:image/jpeg;base64," + imageData;
+		smallImage.src = imageData;
 		alert(imageData);
 		//movePic(imageData);
 
