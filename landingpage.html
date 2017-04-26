@@ -200,7 +200,7 @@
 
             function deleteComplete(xhr,status){
                 if(status!="success"){
-                  divStatus.innerHTML="error while adding user";
+                  divStatus.innerHTML="error while deleting user";
                   return;
                 }
                 else{
@@ -244,7 +244,7 @@
 			function getDevicesComplete(xhr,status){
 				var userid=localStorage.getItem("id");
 		        if(status!="success"){
-		          alert("Error during login");
+		          alert("Error whilst fetching files");
 		          return;
 		        }
 		        else{

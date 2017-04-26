@@ -339,6 +339,8 @@ function addDevice(){
 
 	if(is_array($_FILES)) {
 		if(is_uploaded_file($_FILES['userImage']['tmp_name'])) {
+			
+
 			$sourcePath = $_FILES['userImage']['tmp_name'];
 				$targetPath = "img/".$_FILES['userImage']['name'];
 				if(move_uploaded_file($sourcePath,$targetPath)) {
@@ -350,6 +352,22 @@ function addDevice(){
 		else{
 				$image='img/device.jpg';
 			}
+
+		if(is_uploaded_file($_FILES['takephoto']['tmp_name'])) {
+			
+
+			$sourcePath = $_FILES['takephoto']['tmp_name'];
+				$targetPath = "img/".$_FILES['takephoto']['name'];
+				if(move_uploaded_file($sourcePath,$targetPath)) {
+				
+					 $image= 'img/'.$_FILES['takephoto']['name'];
+				
+			}
+		}
+		else{
+				$image='img/device.jpg';
+			}
+
 	}
 
 
