@@ -93,10 +93,10 @@
                       var point = new google.maps.LatLng(
                           parseFloat(markerElem.getAttribute('lat')),
                           parseFloat(markerElem.getAttribute('lng')));
-                     if(listarray.includes(name)){
+                     // if(listarray.includes(name)){
 
-                     }
-                     else{
+                     // }
+                     // else{
                       listarray[counter]=name;
                       counter++;
                       var infowincontent = document.createElement('div');
@@ -123,7 +123,7 @@
                         infoWindow.setContent(infowincontent);
                         infoWindow.open(map, marker);
                       });
-                  }
+                //  }
            });
           });
         }
