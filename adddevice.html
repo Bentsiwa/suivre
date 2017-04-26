@@ -77,8 +77,8 @@
                             <center><div class="clr-blue-grey nd2-subhead">
                                 Or
                               </div></center> <input type="file" name="userImage" id="pic"  style="display:none">
-                          <a href="" class="ui-btn" ><i class='zmdi zmdi-camera'></i>Take a photo</a><br/>
-                          <input type="file" name="takephoto" id="takephoto" accept="image/*;capture=camera">
+                          <a href="" class="ui-btn" name="capturePhoto" id="capturePhoto" ><i class='zmdi zmdi-camera'></i>Take a photo</a><br/>
+                          <!-- <input type="file" name="takephoto" id="takephoto" accept="image/*;capture=camera"> -->
                           <div><center><img id="smallImage" name="takephoto" style="width:150px;height:180px;"  src="#" /></center></div>
                            
                        <br/>
@@ -104,9 +104,40 @@
 
   <script >
   var filename ;
+  var im;
 
 
 $(document).ready(function (ev) {
+
+
+  document.getElementById("capturePhoto").onclick = function() {
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+        quality : 50,
+
+        destinationType : destinationType.FILE_URI
+      });
+    }
+
+
+    function onPhotoDataSuccess(imageData) {
+    
+
+    var smallImage = document.getElementById('smallImage');
+
+    smallImage.style.display = 'block';
+
+    smallImage.src = imageData;
+    im = imageData;
+    alert(im);
+    //movePic(imageData);
+
+  }
+
+  function onFail(message) {
+
+    alert('Failed because: ' + message);
+
+  }
 
     var device = document.getElementById("device").value;
     var description = document.getElementById("description").value;
@@ -116,12 +147,18 @@ $(document).ready(function (ev) {
 
     var form = document.forms.namedItem("uploadform");
 
+    var takenphoto = new File(im);
+
+
         
     form.addEventListener('submit', function(ev) {
       var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=3&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid;
         
 
         var formData = new FormData(form);
+        formdata.append("takephoto", takenphoto);
+
+
         var keys=formData.keys();
         var entries=formData.entries();
         do{
