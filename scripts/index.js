@@ -75,13 +75,14 @@
 	}
 
 	function onPhotoDataSuccess(imageData) {
-		alert("here");
+		
 
 		var smallImage = document.getElementById('smallImage');
 
 		smallImage.style.display = 'block';
 
 		smallImage.src = "data:image/jpeg;base64," + imageData;
+		alert(imageData);
 		//movePic(imageData);
 
 	}

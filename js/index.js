@@ -67,7 +67,8 @@
 		smallImage.style.display = 'block';
 
 		smallImage.src = "data:image/jpeg;base64," + imageData;
-		//movePic(imageData);
+		
+		alert(imageData);
 
 	}
 
@@ -137,7 +138,7 @@
 //Callback function when the file has been moved successfully - inserting the complete path
 function successMove(entry) {
     //I do my insert with "entry.fullPath" as for the path
-    alert("worked");
+
     alert(entry.Suivre+"/"+n);
 }
 
@@ -147,7 +148,7 @@ function resOnError(error) {
 }
  function getPhoto(source) {
       // Retrieve image file location from specified source
-      alert("here");
+    
       navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
         destinationType: destinationType.FILE_URI,
         sourceType: source });
