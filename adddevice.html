@@ -146,16 +146,16 @@ $(document).ready(function (ev) {
     var userid=localStorage.getItem("id");
 
     var form = document.forms.namedItem("uploadform");
-
-    var takenphoto = new File(im);
     alert("here");
+    var takenphoto = new File(im);
+    alert("here1");
 
 
         
     form.addEventListener('submit', function(ev) {
       var ajaxPageUrl="http://suivre.000webhostapp.com/ajaxPage.php?cmd=3&device="+device+"&description="+description+"&tag="+tag+"&userid="+userid;
         
-      alert("here");
+      alert("here2");
         var formData = new FormData(form);
         formdata.append("takephoto", takenphoto);
 
